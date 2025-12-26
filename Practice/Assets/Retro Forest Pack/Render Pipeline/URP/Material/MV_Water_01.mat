@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4751752839194968544
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0
+--- !u!114 &-4475282138856640480
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MV_Water_01
+  m_Shader: {fileID: -6465566751694194690, guid: 985d8623cb26f4d47b0f33f5176a9e02,
+    type: 3}
+  m_Parent: {fileID: 2100000, guid: 2de0c2f281571e04e9978740c6f68bbb, type: 2}
+  m_ModifiedSerializedProperties: 18
+  m_ValidKeywords:
+  - _ALPHAPREMULTIPLY_ON
+  - _BUILTIN_SURFACE_TYPE_TRANSPARENT
+  - _SURFACE_TYPE_TRANSPARENT
+  m_InvalidKeywords: []
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses:
+  - DepthOnly
+  - SHADOWCASTER
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _SampleTexture2D_03cd506f8fe24a3bb6b5000fd1b0ac94_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: ce166d5ff5bfd154f81c87be5cd8611a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_f31728607f8740bf89bb4901d709716d_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 1018b59c44e7d1f48a4038cafbf5e147, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Albedo_Tiling_Amount: 1
+    - _BUILTIN_DstBlend: 10
+    - _BUILTIN_QueueControl: 1
+    - _BUILTIN_SrcBlend: 5
+    - _CastShadows: 0
+    - _DstBlend: 10
+    - _Fresnel_Strength: 2.26
+    - _Opacity_Fade_Distance: 1.5
+    - _Overall_Opacity: 0.9
+    - _Reflection_Brightness: 0.3
+    - _Surface: 1
+    - _Use_Ambient_Occlusion: 1
+    - _Waves_Brightness: 1
+    - _ZWrite: 0
+    m_Colors:
+    - _Sky_Color: {r: 0.50980395, g: 0.7411765, b: 1, a: 1}
+    - _Water_Speed: {r: 0.1, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []

@@ -1,0 +1,347 @@
+fileFormatVersion: 2
+guid: 28c80de5699806a478af9a5f9a7ce4ce
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tRequired
+      human bone 'RightUpperLeg' not found\n"
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human:
+    - boneName: arms_rig
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: pasted__joint14
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: pasted__joint16
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: pasted__joint21
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: pasted__joint3
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: pasted__joint4
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: pasted__joint7
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: pasted__joint8
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: pasted__joint10
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: pasted__joint11
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: pasted__joint12
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: pasted__joint22
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: pasted__joint9
+      humanName: RightEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: pasted__joint5
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: arms(Clone)
+      parentName: 
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: arms_rig
+      parentName: arms(Clone)
+      position: {x: 0.000001568264, y: -0.042049415, z: 0.9700579}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint2
+      parentName: arms_rig
+      position: {x: -0.000001568264, y: 0.042049415, z: -0.06439148}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint3
+      parentName: pasted__joint2
+      position: {x: 0.042830586, y: 0, z: 0.10471307}
+      rotation: {x: -0, y: -0.5336145, z: -0, w: 0.8457278}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint4
+      parentName: pasted__joint3
+      position: {x: 0.13406147, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint5
+      parentName: pasted__joint4
+      position: {x: 0.3352961, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint6
+      parentName: pasted__joint5
+      position: {x: 0.34026897, y: 0.0054430575, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint7
+      parentName: pasted__joint6
+      position: {x: 0.072877996, y: 0, z: 0.003768752}
+      rotation: {x: -0, y: -0.04965978, z: -0, w: 0.9987662}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint8
+      parentName: pasted__joint7
+      position: {x: 0.06422936, y: -1.4210854e-16, z: -0.009642294}
+      rotation: {x: 0, y: 0.15083884, z: -0, w: 0.9885584}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint9
+      parentName: pasted__joint8
+      position: {x: 0.07614624, y: 2.842171e-16, z: 0.0012655498}
+      rotation: {x: 0.029108534, y: -0.022041118, z: -0.08006248, w: 0.9961209}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint10
+      parentName: pasted__joint6
+      position: {x: 0.050401777, y: -0.044526517, z: -0.000361009}
+      rotation: {x: 0.048275404, y: 0.41215566, z: -0.22465496, w: 0.8816617}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint11
+      parentName: pasted__joint10
+      position: {x: 0.033046328, y: 0.007158071, z: -0.00043258816}
+      rotation: {x: -0.023440987, y: 0.07559609, z: 0.14395922, w: 0.9864135}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint12
+      parentName: pasted__joint11
+      position: {x: 0.035479527, y: 0.0016002099, z: -0.002519173}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint13
+      parentName: arms_rig
+      position: {x: -0.000001568264, y: 0.042049415, z: -0.06439193}
+      rotation: {x: 1, y: 0, z: 0, w: -6.123234e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint14
+      parentName: pasted__joint13
+      position: {x: -0.0428306, y: -1.2823766e-17, z: -0.104714}
+      rotation: {x: -4.8088628e-17, y: 0.61905605, z: -3.7906253e-17, w: 0.78534687}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint15
+      parentName: pasted__joint14
+      position: {x: -0.1340614, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint16
+      parentName: pasted__joint15
+      position: {x: -0.33529598, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint17
+      parentName: pasted__joint16
+      position: {x: -0.340269, y: -0.00544306, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint18
+      parentName: pasted__joint17
+      position: {x: -0.072877996, y: -2.220446e-18, z: -0.00377}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint19
+      parentName: pasted__joint18
+      position: {x: -0.064229004, y: 3.330669e-18, z: 0.00964}
+      rotation: {x: 0, y: 0.15083884, z: -0, w: 0.9885584}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint20
+      parentName: pasted__joint19
+      position: {x: -0.076144956, y: 4.440892e-18, z: -0.0012607747}
+      rotation: {x: 0.029108534, y: -0.022041118, z: -0.08006248, w: 0.9961209}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint21
+      parentName: pasted__joint17
+      position: {x: -0.050402, y: 0.04452656, z: 0.00035999998}
+      rotation: {x: 0.395387, y: -0.45563275, z: -0.5250585, w: 0.60031796}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint22
+      parentName: pasted__joint21
+      position: {x: -0.033046115, y: -0.0071581146, z: 0.00043734908}
+      rotation: {x: -0.00032599267, y: -0.0076338025, z: 0.19056419, w: 0.98164505}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pasted__joint23
+      parentName: pasted__joint22
+      position: {x: -0.035479307, y: -0.0016000039, z: 0.0025173333}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Arms
+      parentName: arms(Clone)
+      position: {x: -0, y: -0.0012482059, z: 1.0084441}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: arms_rig
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
