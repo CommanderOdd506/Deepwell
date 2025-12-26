@@ -14,6 +14,7 @@ public class WeaponReference
 {
     public WeaponData weaponData;
     public GameObject objectReference;
+    public GameObject worldReference;
 }
 
 public class PlayerCombatController : MonoBehaviourPun
@@ -26,6 +27,7 @@ public class PlayerCombatController : MonoBehaviourPun
     private ArmType currentArms;
 
     [SerializeField] private PlayerRecoil playerRecoil;
+    [SerializeField] private AnimationController animationController;
     [SerializeField] WeaponReference[] weaponDatabase;
     int currentWeaponIndex = 0;
 
@@ -126,6 +128,7 @@ public class PlayerCombatController : MonoBehaviourPun
             Debug.Log("Equip rejected");
             return;
         }
+        currentWeapon = newWeapon;  
         maxMagAmmo = newWeapon.magSize;
         magAmmo = maxMagAmmo;
 
@@ -140,9 +143,11 @@ public class PlayerCombatController : MonoBehaviourPun
             {
                 case ArmType.RifleArms:
                     rifleArms.SetActive(true);
+                    animationController.SetWeaponState(1);
                     break;
                 case ArmType.PistolArms:
                     pistolArms.SetActive(true);
+                    animationController.SetWeaponState(2);
                     break;
                 default:
                     rifleArms.SetActive(true);
@@ -157,14 +162,17 @@ public class PlayerCombatController : MonoBehaviourPun
             {
                 currentWeapon = weapon.weaponData;
                 weapon.objectReference.SetActive(true);
+                weapon.worldReference.SetActive(true);
                 continue;
             }
             else
             {
                 weapon.objectReference.SetActive(false);
+                weapon.worldReference.SetActive(false);
                 continue;
             }
         }
+        
         UpdateUI();
     }
     private void UpdateUI()

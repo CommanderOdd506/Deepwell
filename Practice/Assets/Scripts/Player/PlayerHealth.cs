@@ -13,11 +13,10 @@ public class PlayerHealth : MonoBehaviourPun
     private bool isAlive;
     bool deathProcessed;
     int actorNumber;
-    private PhotonView photonView;
+
     private void Start()
     {
-        photonView = GetComponent<PhotonView>();
-        actorNumber = photonView.Owner.ActorNumber;
+        
         Initialize();
         // Only register on the master client
         if (PhotonNetwork.IsMasterClient)
@@ -37,6 +36,7 @@ public class PlayerHealth : MonoBehaviourPun
     void RegisterWithDamageSystem()
     {
         DamageSystem damageSystem = FindObjectOfType<DamageSystem>();
+        actorNumber = photonView.Owner.ActorNumber;
         if (damageSystem != null)
         {
             damageSystem.RegisterPlayer(this);
@@ -56,22 +56,42 @@ public class PlayerHealth : MonoBehaviourPun
         currentHealth = maxHealth;
         isAlive = true;
         deathProcessed = false;
+
+        if (photonView.IsMine && healthText == null)
+            Debug.LogWarning("[PlayerHealth] healthText is NOT assigned on local player!");
+        UpdateUI();
     }
 
     [PunRPC]
-    void RPC_SetHealth(int newHealth)
+    void RPC_SetHealth(int newHealth, PhotonMessageInfo info)
     {
+        Debug.Log(
+            $"[RPC_SetHealth] GO={gameObject.name} " +
+            $"NewHealth={newHealth} " +
+            $"IsMine={photonView.IsMine} " +
+            $"Sender={info.Sender.ActorNumber}"
+        );
+
         currentHealth = newHealth;
         UpdateUI();
-        CheckDeath();
     }
 
     [PunRPC]
     void RPC_Respawn(Vector3 spawnPoint)
     {
-        gameObject.transform.position = spawnPoint;
-    }
+        transform.position = spawnPoint;
 
+        currentHealth = maxHealth;
+        isAlive = true;
+        deathProcessed = false;
+
+        UpdateUI();
+    }
+    public void SetHealthUI(TextMeshProUGUI ui)
+    {
+        healthText = ui;
+        UpdateUI();
+    }
     void CheckDeath()
     {
         if (!isAlive || deathProcessed)
@@ -81,15 +101,25 @@ public class PlayerHealth : MonoBehaviourPun
     [PunRPC]
     void RPC_OnDeath()
     {
+        if (deathProcessed) return;
 
+        deathProcessed = true;
         isAlive = false;
-        //DisableInput();
-        // Disable input, combat, etc.
-        // Notify GameModeManager via event later
+
+        // Disable input, weapons, etc.
     }
 
     private void UpdateUI()
     {
+        Debug.Log(
+            $"[UpdateUI] GO={gameObject.name} " +
+            $"IsMine={photonView.IsMine} " +
+            $"HealthText={(healthText != null)} " +
+            $"Health={currentHealth}"
+        );
+
+        if (!photonView.IsMine) return;
+
         healthText.text = currentHealth.ToString();
     }
 }

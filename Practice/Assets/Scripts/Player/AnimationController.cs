@@ -48,4 +48,9 @@ public class AnimationController : MonoBehaviourPun
     {
         animator.SetInteger("WeaponType", (int)type);
     }
+
+    public void SetWeaponState(int state)
+    {
+        animator.SetInteger("WeaponState", state);
+    }
 }

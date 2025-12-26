@@ -11,6 +11,7 @@ public class DamageSystem : MonoBehaviourPunCallbacks
     // ActorNumber -> PlayerHealth
     private Dictionary<int, PlayerHealth> playerHealthMap =
         new Dictionary<int, PlayerHealth>();
+    private Dictionary<int, int> healthByActor = new Dictionary<int, int>();
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -31,6 +32,10 @@ public class DamageSystem : MonoBehaviourPunCallbacks
     {
         int actorNumber = health.photonView.Owner.ActorNumber;
         playerHealthMap[actorNumber] = health;
+
+        // Master authoritative health value
+        if (!healthByActor.ContainsKey(actorNumber))
+            healthByActor[actorNumber] = health.maxHealth;
     }
 
     public void ProcessHitscan(
@@ -51,7 +56,7 @@ public class DamageSystem : MonoBehaviourPunCallbacks
         }
         if (Physics.Raycast(origin, direction, out RaycastHit hit, range))
         {
-            PlayerHealth target = hit.collider.GetComponent<PlayerHealth>();
+            PlayerHealth target = hit.collider.GetComponentInParent<PlayerHealth>();
             if (target == null)
                 return;
             ApplyDamage(target.photonView.Owner.ActorNumber, damage);
@@ -66,16 +71,18 @@ public class DamageSystem : MonoBehaviourPunCallbacks
         if (!playerHealthMap.TryGetValue(targetActorNumber, out PlayerHealth targetHealth))
             return;
 
-        int newHealth = Mathf.Max(0, targetHealth.currentHealth - damage);
+        if (!healthByActor.TryGetValue(targetActorNumber, out int current))
+            current = targetHealth.maxHealth;
 
-        targetHealth.photonView.RPC(
-            "RPC_SetHealth",
-            targetHealth.photonView.Owner,
-            newHealth
-        );
+        int newHealth = Mathf.Max(0, current - damage);
+        healthByActor[targetActorNumber] = newHealth;
+
+        // Send health to everyone so all instances stay consistent (UI still only updates on owner)
+        targetHealth.photonView.RPC("RPC_SetHealth", RpcTarget.All, newHealth);
 
         if (newHealth <= 0)
         {
+            targetHealth.photonView.RPC("RPC_OnDeath", RpcTarget.All);
             NotifyDeath(targetActorNumber);
         }
     }
@@ -91,12 +98,13 @@ public class DamageSystem : MonoBehaviourPunCallbacks
             break;
         }
     }
-    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         if (!PhotonNetwork.IsMasterClient)
             return;
 
         playerHealthMap.Remove(otherPlayer.ActorNumber);
+        healthByActor.Remove(otherPlayer.ActorNumber);
     }
 
     private Vector3 GetSpawnPoint()
@@ -107,17 +115,15 @@ public class DamageSystem : MonoBehaviourPunCallbacks
     private void NotifyDeath(int deadActorNumber)
     {
         Debug.Log($"Player {deadActorNumber} died.");
+
         if (!playerHealthMap.TryGetValue(deadActorNumber, out PlayerHealth health))
             return;
-        // Example (later):
-        // GameModeManager.Instance.OnPlayerDeath(deadActorNumber);
-        Vector3 spawnPoint = GetSpawnPoint();
 
-        health.photonView.RPC(
-            "RPC_Respawn",
-            health.photonView.Owner,
-            spawnPoint
-        );
+        healthByActor[deadActorNumber] = health.maxHealth;
+
+        Vector3 spawnPoint = GetSpawnPoint(/* optionally pass deadActorNumber */);
+
+        health.photonView.RPC("RPC_Respawn", RpcTarget.All, spawnPoint);
     }
     [PunRPC]
     void RPC_RequestFire(
@@ -131,6 +137,7 @@ public class DamageSystem : MonoBehaviourPunCallbacks
 
         Debug.Log("Master caught a fire event");
 
+        //check for players equipped weapon and apply damage 
         int damage = 25;
         float range = 100f;
 

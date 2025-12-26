@@ -5,7 +5,7 @@ using System.Collections;
 public class SpawnPlayers : MonoBehaviour
 {
     public GameObject playerPrefab;
-    public Transform spawn;
+    public Transform[] spawns;
 
     void Start()
     {
@@ -21,6 +21,7 @@ public class SpawnPlayers : MonoBehaviour
 
         Debug.Log($"[SPAWN] Actor {PhotonNetwork.LocalPlayer.ActorNumber} spawning");
 
-        PhotonNetwork.Instantiate(playerPrefab.name, spawn.position, Quaternion.identity);
+        int spawnIndex = Random.Range(0, spawns.Length - 1);
+        PhotonNetwork.Instantiate(playerPrefab.name, spawns[spawnIndex].position, Quaternion.identity);
     }
 }

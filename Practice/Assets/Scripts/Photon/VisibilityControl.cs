@@ -6,6 +6,8 @@ public class VisibilityControl : MonoBehaviourPun
     [Header("Mesh Groups")]
     public Renderer[] bodyRenderers;       // World model
     public Renderer[] viewModelRenderers;  // Arms + gun
+    public GameObject[] localObjects;
+    public GameObject[] remoteObjects;
 
     AudioListener audioListener;
 
@@ -28,8 +30,15 @@ public class VisibilityControl : MonoBehaviourPun
         foreach (var r in bodyRenderers)
             r.enabled = false;
 
+        
         foreach (var r in viewModelRenderers)
             r.enabled = true;
+
+        foreach (GameObject obj in localObjects)
+            obj.SetActive(true);
+
+        foreach (GameObject obj in remoteObjects)
+            obj.SetActive(false);
 
         if (audioListener)
             audioListener.enabled = true;
@@ -43,6 +52,12 @@ public class VisibilityControl : MonoBehaviourPun
 
         foreach (var r in viewModelRenderers)
             r.enabled = false;
+
+        foreach (GameObject obj in localObjects)
+            obj.SetActive(false);
+
+        foreach (GameObject obj in remoteObjects)
+            obj.SetActive(true);
 
         if (audioListener)
             audioListener.enabled = false;
