@@ -10,46 +10,41 @@ public class PlayerHealth : MonoBehaviourPun
     public int currentHealth;
     public int maxHealth;
     public TextMeshProUGUI healthText;
+    private PlayerCombatController playerCombatController;
     private bool isAlive;
     bool deathProcessed;
     int actorNumber;
 
+
     private void Start()
     {
-        
+        if (!photonView.IsMine)
+            return;
+        playerCombatController = GetComponent<PlayerCombatController>();
         Initialize();
-        // Only register on the master client
-        if (PhotonNetwork.IsMasterClient)
-        {
-            RegisterWithDamageSystem();
-        }
-        else
-        {
-            // Non-master clients request registration
-            photonView.RPC(
-                "RPC_RequestRegistration",
-                RpcTarget.MasterClient
-            );
-        }
-    }
 
-    void RegisterWithDamageSystem()
-    {
-        DamageSystem damageSystem = FindObjectOfType<DamageSystem>();
-        actorNumber = photonView.Owner.ActorNumber;
-        if (damageSystem != null)
-        {
-            damageSystem.RegisterPlayer(this);
-
-            Debug.Log($"[DamageSystem] Registered PlayerHealth for Actor {actorNumber}");
-        }
+        // EVERYONE requests registration
+        photonView.RPC(
+            "RPC_RequestRegistration",
+            RpcTarget.MasterClient
+        );
     }
 
     [PunRPC]
-    void RPC_RequestRegistration()
+    void RPC_RequestRegistration(PhotonMessageInfo info)
     {
-        RegisterWithDamageSystem();
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        int actorNumber = info.Sender.ActorNumber;
+
+        DamageSystem.Instance.RegisterPlayer(
+            actorNumber,
+            this,
+            playerCombatController.GetCurrentWeapon()
+        );
     }
+
 
     void Initialize()
     {

@@ -27080,6 +27080,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f7d02fd1eb68d44a9b689120183290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponDatabase:
+  - {fileID: 11400000, guid: f407f6213403ba64994d39f420510778, type: 2}
+  - {fileID: 11400000, guid: 401a69f9d64c8a54f91319270f6f81d6, type: 2}
+  - {fileID: 11400000, guid: 2941fa18546627b40b238c3fc8ddf775, type: 2}
+  - {fileID: 11400000, guid: 6da7cf5a397b2d34cbaa0c638558e47e, type: 2}
+  - {fileID: 11400000, guid: edf410d81ff26804781dc154f923bf3b, type: 2}
+  - {fileID: 11400000, guid: b4d1943bed4fdb24b91076760ed30c60, type: 2}
+  - {fileID: 11400000, guid: a57e469cb6a740848b461c58860d5ca5, type: 2}
+  - {fileID: 11400000, guid: 419685c58b00efa428b2d9134f4e80ca, type: 2}
+  - {fileID: 11400000, guid: 62d9307383eb73e44a3918428f67fa11, type: 2}
+  - {fileID: 11400000, guid: 7b504007ca4c72b43ac2d0321d321f37, type: 2}
+  - {fileID: 11400000, guid: 991a0e14175adef4a9ea82d1d671a5a0, type: 2}
+  - {fileID: 11400000, guid: 4b850d86be1012a4a80f461ba5df16e6, type: 2}
 --- !u!114 &1344166263
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -172,7 +172,15 @@ public class PlayerCombatController : MonoBehaviourPun
                 continue;
             }
         }
-        
+        if (DamageSystem.Instance != null && PhotonNetwork.InRoom)
+        {
+            DamageSystem.Instance.photonView.RPC(
+            "RPC_UpdateWeapon",
+            RpcTarget.MasterClient,
+            photonView.OwnerActorNr,
+            currentWeapon.weaponId
+            );
+        }
         UpdateUI();
     }
     private void UpdateUI()
@@ -230,6 +238,11 @@ public class PlayerCombatController : MonoBehaviourPun
         magAmmo = maxMagAmmo;
         isReloading = false;
         UpdateUI();
+    }
+
+    public WeaponData GetCurrentWeapon()
+    {
+        return currentWeapon;
     }
 
     IEnumerator ReloadViewModelMotion(float reloadTime)

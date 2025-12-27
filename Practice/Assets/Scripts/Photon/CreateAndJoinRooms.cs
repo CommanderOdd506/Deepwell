@@ -27,6 +27,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        Debug.Log("Joined room");
         // ONLY host loads the level
         if (PhotonNetwork.IsMasterClient)
         {

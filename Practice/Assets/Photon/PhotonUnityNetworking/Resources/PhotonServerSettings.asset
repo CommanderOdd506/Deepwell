@@ -46,6 +46,7 @@ MonoBehaviour:
   - RPC_OnDeath
   - RPC_Respawn
   - RPC_RequestFire
+  - RPC_UpdateWeapon
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -12,6 +12,8 @@ public class DamageSystem : MonoBehaviourPunCallbacks
     private Dictionary<int, PlayerHealth> playerHealthMap =
         new Dictionary<int, PlayerHealth>();
     private Dictionary<int, int> healthByActor = new Dictionary<int, int>();
+    private Dictionary<int, WeaponData> weaponByActor = new Dictionary<int, WeaponData>();
+    [SerializeField] private WeaponData[] weaponDatabase;
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -27,16 +29,24 @@ public class DamageSystem : MonoBehaviourPunCallbacks
     {
         spawn = gameObject.transform.position;
     }
-    // Called by spawn system or player on spawn
-    public void RegisterPlayer(PlayerHealth health)
-    {
-        int actorNumber = health.photonView.Owner.ActorNumber;
-        playerHealthMap[actorNumber] = health;
 
-        // Master authoritative health value
-        if (!healthByActor.ContainsKey(actorNumber))
-            healthByActor[actorNumber] = health.maxHealth;
+
+    public void RegisterPlayer(
+    int actorNumber,
+    PlayerHealth health,
+    WeaponData startingWeapon
+)
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        playerHealthMap[actorNumber] = health;
+        healthByActor[actorNumber] = health.maxHealth;
+        weaponByActor[actorNumber] = startingWeapon;
+
+        Debug.Log($"[DamageSystem] Registered Actor {actorNumber}");
     }
+
 
     public void ProcessHitscan(
     int shooterActor,
@@ -106,12 +116,36 @@ public class DamageSystem : MonoBehaviourPunCallbacks
         playerHealthMap.Remove(otherPlayer.ActorNumber);
         healthByActor.Remove(otherPlayer.ActorNumber);
     }
+    [PunRPC]
+    public void RPC_UpdateWeapon(int actorNumber, int weaponId)
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
 
+        WeaponData weapon = FindWeaponById(weaponId);
+        if (weapon == null)
+        {
+            Debug.LogError($"[DamageSystem] Unknown weaponId {weaponId}");
+            return;
+        }
+
+        weaponByActor[actorNumber] = weapon;
+
+        Debug.Log($"[DamageSystem] Actor {actorNumber} switched to weapon {weapon.weaponId}");
+    }
     private Vector3 GetSpawnPoint()
     {
         return spawn;
     }
 
+    WeaponData FindWeaponById(int id)
+    {
+        foreach (var w in weaponDatabase)
+            if (w.weaponId == id)
+                return w;
+
+        return null;
+    }
     private void NotifyDeath(int deadActorNumber)
     {
         Debug.Log($"Player {deadActorNumber} died.");
@@ -138,7 +172,13 @@ public class DamageSystem : MonoBehaviourPunCallbacks
         Debug.Log("Master caught a fire event");
 
         //check for players equipped weapon and apply damage 
-        int damage = 25;
+        if (!weaponByActor.TryGetValue(info.Sender.ActorNumber, out WeaponData weapon))
+        {
+            Debug.LogWarning($"[DamageSystem] No weapon for Actor {info.Sender.ActorNumber}");
+            return;
+        }
+
+        int damage = weapon.damage;
         float range = 100f;
 
         ProcessHitscan(
