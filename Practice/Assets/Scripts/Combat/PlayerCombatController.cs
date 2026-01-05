@@ -172,6 +172,8 @@ public class PlayerCombatController : MonoBehaviourPun
                 continue;
             }
         }
+        photonView.RPC("RPC_SyncWeaponVisuals", RpcTarget.AllBuffered, newWeaponId);
+
         if (DamageSystem.Instance != null && PhotonNetwork.InRoom)
         {
             DamageSystem.Instance.photonView.RPC(
@@ -280,5 +282,26 @@ public class PlayerCombatController : MonoBehaviourPun
         }
 
         rt.localPosition = viewModelStartPos;
+    }
+    [PunRPC]
+    void RPC_SyncWeaponVisuals(int weaponId)
+    {
+        foreach (WeaponReference weapon in weaponDatabase)
+        {
+            bool isEquipped = (weapon.weaponData.weaponId == weaponId);
+
+            if (photonView.IsMine)
+            {
+                // You see your viewmodel
+                weapon.objectReference.SetActive(isEquipped);
+                weapon.worldReference.SetActive(false);
+            }
+            else
+            {
+                // Others see your world model
+                weapon.objectReference.SetActive(false);
+                weapon.worldReference.SetActive(isEquipped);
+            }
+        }
     }
 }

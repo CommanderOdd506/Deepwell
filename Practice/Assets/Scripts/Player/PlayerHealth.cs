@@ -20,28 +20,46 @@ public class PlayerHealth : MonoBehaviourPun
     {
         if (!photonView.IsMine)
             return;
+
         playerCombatController = GetComponent<PlayerCombatController>();
         Initialize();
 
-        // EVERYONE requests registration
+        // Pass weaponId as parameter
+        int weaponId = playerCombatController.GetCurrentWeapon()?.weaponId ?? -1;
+
         photonView.RPC(
             "RPC_RequestRegistration",
-            RpcTarget.MasterClient
+            RpcTarget.MasterClient,
+            weaponId
         );
     }
 
     [PunRPC]
-    void RPC_RequestRegistration(PhotonMessageInfo info)
+    void RPC_RequestRegistration(int weaponId, PhotonMessageInfo info)
     {
         if (!PhotonNetwork.IsMasterClient)
             return;
 
         int actorNumber = info.Sender.ActorNumber;
 
+        if (weaponId == -1)
+        {
+            Debug.LogError($"[PlayerHealth] Invalid weaponId for Actor {actorNumber}");
+            return;
+        }
+
+        // Find weapon from DamageSystem's database
+        WeaponData weapon = DamageSystem.Instance.FindWeaponById(weaponId);
+        if (weapon == null)
+        {
+            Debug.LogError($"[PlayerHealth] No weapon found for weaponId {weaponId} for Actor {actorNumber}");
+            return;
+        }
+
         DamageSystem.Instance.RegisterPlayer(
             actorNumber,
             this,
-            playerCombatController.GetCurrentWeapon()
+            weapon
         );
     }
 

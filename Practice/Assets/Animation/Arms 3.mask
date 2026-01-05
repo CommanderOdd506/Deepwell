@@ -28,9 +28,9 @@ AvatarMask:
   - m_Path: Character/Character1/left_thigh/left_shin
     m_Weight: 0
   - m_Path: Character/Character1/neck
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: Character/Character1/neck/head
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: Character/Character1/right_bicep
     m_Weight: 0
   - m_Path: Character/Character1/right_bicep/right_forearm

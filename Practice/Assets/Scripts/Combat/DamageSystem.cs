@@ -138,7 +138,7 @@ public class DamageSystem : MonoBehaviourPunCallbacks
         return spawn;
     }
 
-    WeaponData FindWeaponById(int id)
+    public WeaponData FindWeaponById(int id)
     {
         foreach (var w in weaponDatabase)
             if (w.weaponId == id)

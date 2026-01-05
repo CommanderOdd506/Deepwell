@@ -1,5 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
+using System.Collections;
 
 public class VisibilityControl : MonoBehaviourPun
 {
@@ -16,8 +17,16 @@ public class VisibilityControl : MonoBehaviourPun
         audioListener = GetComponentInChildren<AudioListener>();
     }
 
-    void Start()
+    void OnEnable()
     {
+
+        StartCoroutine(ApplyVisibilityNextFrame());
+    }
+
+    IEnumerator ApplyVisibilityNextFrame()
+    {
+        yield return null; // wait 1 frame for Photon ownership
+
         if (photonView.IsMine)
             SetLocalPlayerVisibility();
         else
