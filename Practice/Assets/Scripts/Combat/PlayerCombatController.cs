@@ -39,6 +39,11 @@ public class PlayerCombatController : MonoBehaviourPun
     public TextMeshProUGUI ammoText;
     public TextMeshProUGUI maxAmmoText;
     public GameObject viewModelUI;
+    public GameObject scope;
+    public Camera cam;
+    public float zoomFOV;
+    private float startingFOV;
+    public GameObject crosshair;
 
     public float dropDistance = 80f;
 
@@ -50,6 +55,8 @@ public class PlayerCombatController : MonoBehaviourPun
     float magAmmo;
     float maxMagAmmo;
     bool isReloading;
+    bool hasScope;
+    bool isScoped;
 
     Coroutine reloadRoutine;
     Coroutine reloadMotionRoutine;
@@ -57,9 +64,10 @@ public class PlayerCombatController : MonoBehaviourPun
 
     void Start()
     {
+        
         if (!photonView.IsMine)
             return;
-
+        startingFOV = cam.fieldOfView;
         EquipWeapon(startingWeapon);
 
         viewModelStartPos = viewModelUI.transform.localPosition;
@@ -77,7 +85,7 @@ public class PlayerCombatController : MonoBehaviourPun
         if(!canControl)
             return;
         float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (scroll != 0f && !isReloading)
+        if (scroll != 0f && !isReloading && !isScoped)
         {
             CycleWeapon(scroll > 0f ? 1 : -1);
         }
@@ -85,8 +93,18 @@ public class PlayerCombatController : MonoBehaviourPun
         bool fireInput = playerInput.firePressed;
         bool reloadInput = playerInput.reloadPressed;
         bool firePressedCheck = fireInput && !lastFireInput;
+        bool aimInput = playerInput.aimPressed;
 
-        if (reloadInput && !isReloading && magAmmo < maxMagAmmo)
+        if (aimInput && hasScope && !isScoped && !isReloading)
+        {
+            ActivateScope();
+        }
+        else if (!aimInput && isScoped) 
+        {
+            DeactivateScope();
+        }
+
+        if (reloadInput && !isReloading && magAmmo < maxMagAmmo && !isScoped)
         {
             StartCoroutine(ReloadEvent());
         }
@@ -141,6 +159,12 @@ public class PlayerCombatController : MonoBehaviourPun
         currentWeapon = newWeapon;  
         maxMagAmmo = newWeapon.magSize;
         magAmmo = maxMagAmmo;
+        hasScope = newWeapon.isScoped;
+
+        if (!hasScope)
+        {
+            DeactivateScope();
+        }
 
         lastFireInput = false;
         ArmType newType = newWeapon.armType;
@@ -229,6 +253,36 @@ public class PlayerCombatController : MonoBehaviourPun
             playerCamera.transform.position,
             playerCamera.transform.forward
         );
+    }
+
+    void ActivateScope()
+    {
+        if (!photonView.IsMine)
+            return;
+
+        if (!isScoped)
+        {
+            isScoped = true;
+            cam.fieldOfView = 50;
+            scope.SetActive(true);
+            crosshair.SetActive(false);
+            viewModelUI.SetActive(false);
+        }
+    }
+
+    void DeactivateScope()
+    {
+        if (!photonView.IsMine)
+            return;
+
+        if (isScoped)
+        {
+            isScoped = false;
+            cam.fieldOfView = startingFOV;
+            scope.SetActive(false);
+            crosshair.SetActive(true);
+            viewModelUI.SetActive(true);
+        }
     }
 
     private IEnumerator ReloadEvent()
