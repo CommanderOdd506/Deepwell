@@ -12,6 +12,12 @@ public class SpawnPlayers : MonoBehaviour
         StartCoroutine(WaitForRoomAndSpawn());
     }
 
+    public Vector3 GetRandomSpawn()
+    {
+        int spawnIndex = Random.Range(0, spawns.Length - 1);
+        return spawns[spawnIndex].position;
+    }
+
     IEnumerator WaitForRoomAndSpawn()
     {
         while (!PhotonNetwork.InRoom)

@@ -25,6 +25,7 @@ public class HeadBobController : MonoBehaviour
     private Vector3 _smoothVel;
     private float _returnSpeed = 10f;
     private float _rotateLerp = 12f;
+    public bool canMove = true;
 
     void Awake()
     {
@@ -33,11 +34,17 @@ public class HeadBobController : MonoBehaviour
         _startPos = _camera.localPosition;
     }
 
+    public void ToggleMotion(bool value)
+    {
+        canMove = value;
+    }
+
     private void CheckMotion()
     {
         float speed = new Vector3(_controller.velocity.x, 0, _controller.velocity.z).magnitude;
         if (speed < _toggleSpeed) return;
         if (!_controller.isGrounded) return;
+        if(!canMove) return;
         if (playerInput.sprintHeld)
         {
             _amplitude = _runAmplitude;

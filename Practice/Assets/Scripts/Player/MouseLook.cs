@@ -13,6 +13,8 @@ public class MouseLook : MonoBehaviourPun
     private float _pitch;
     private Camera cam;
 
+    public bool canMove = true;
+
     void Start()
     {
         cam = GetComponentInChildren<Camera>();
@@ -39,9 +41,27 @@ public class MouseLook : MonoBehaviourPun
         }
     }
 
+    public void ToggleMovement(bool value)
+    {
+        canMove = value;
+
+        if (!canMove)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
+    }
+
     void Update()
     {
         if (!photonView.IsMine) return;
+        if (!canMove) return;
 
         float mouseX = Input.GetAxisRaw("Mouse X") * sensitivity;
         float mouseY = Input.GetAxisRaw("Mouse Y") * sensitivity;

@@ -18,6 +18,8 @@ public class PlayerInput : MonoBehaviourPun
     [Header("Combat")]
     public bool reloadPressed;
 
+    [Header("Util")]
+    public bool pausePressed;
 
     void Awake()
     {
@@ -36,6 +38,7 @@ public class PlayerInput : MonoBehaviourPun
         sprintHeld = Input.GetKey(KeyCode.LeftShift);
         interactPressed = Input.GetKeyDown(KeyCode.F);
         reloadPressed = Input.GetKeyDown(KeyCode.R);
+        pausePressed = Input.GetKeyDown(KeyCode.Escape);
         jumpPressed = Input.GetKeyDown(KeyCode.Space);
         firePressed = Input.GetMouseButton(0);
         aimPressed = Input.GetMouseButton(1);

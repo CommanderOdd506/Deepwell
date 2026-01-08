@@ -42,6 +42,9 @@ public class PlayerCombatController : MonoBehaviourPun
 
     public float dropDistance = 80f;
 
+
+    public bool canControl = true;
+
     bool lastFireInput;
     float nextFireTime;
     float magAmmo;
@@ -61,11 +64,18 @@ public class PlayerCombatController : MonoBehaviourPun
 
         viewModelStartPos = viewModelUI.transform.localPosition;
     }
+
+    public void ToggleControl(bool value)
+    {
+        canControl = value;
+    }
+
     void Update()
     {
         if (!photonView.IsMine)
             return;
-
+        if(!canControl)
+            return;
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0f && !isReloading)
         {

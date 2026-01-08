@@ -8,6 +8,7 @@ public class DamageSystem : MonoBehaviourPunCallbacks
 {
     public static DamageSystem Instance { get; private set; }
     private Vector3 spawn;
+    private SpawnPlayers spawnPlayers;
     // ActorNumber -> PlayerHealth
     private Dictionary<int, PlayerHealth> playerHealthMap =
         new Dictionary<int, PlayerHealth>();
@@ -27,7 +28,7 @@ public class DamageSystem : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        spawn = gameObject.transform.position;
+        spawnPlayers = GetComponentInParent<SpawnPlayers>();
     }
 
 
@@ -133,10 +134,6 @@ public class DamageSystem : MonoBehaviourPunCallbacks
 
         Debug.Log($"[DamageSystem] Actor {actorNumber} switched to weapon {weapon.weaponId}");
     }
-    private Vector3 GetSpawnPoint()
-    {
-        return spawn;
-    }
 
     public WeaponData FindWeaponById(int id)
     {
@@ -155,7 +152,7 @@ public class DamageSystem : MonoBehaviourPunCallbacks
 
         healthByActor[deadActorNumber] = health.maxHealth;
 
-        Vector3 spawnPoint = GetSpawnPoint(/* optionally pass deadActorNumber */);
+        Vector3 spawnPoint = spawnPlayers.GetRandomSpawn();
 
         health.photonView.RPC("RPC_Respawn", RpcTarget.All, spawnPoint);
     }

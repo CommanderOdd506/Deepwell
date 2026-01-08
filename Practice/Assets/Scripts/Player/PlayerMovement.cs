@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviourPun
 
     public bool isGrounded;
     public bool isSprinting;
+    public bool canMove = true;
 
     //runtime variables
 
@@ -50,10 +51,16 @@ public class PlayerMovement : MonoBehaviourPun
         input = GetComponent<PlayerInput>();
     }
 
+    public void ToggleMovement(bool value)
+    {
+        canMove = value;
+    }
+
     void Update()
     {
         if (!photonView.IsMine) return;
-        Vector3 forward = head.forward;
+        
+            Vector3 forward = head.forward;
         forward.y = 0f;
         forward.Normalize();
 
@@ -65,11 +72,22 @@ public class PlayerMovement : MonoBehaviourPun
         bool sprintHeld = input.sprintHeld;
         bool jumpPressed = input.jumpPressed;
 
+        if (!canMove)
+        {
+            if (isGrounded && _velocity.y < 0f) _velocity.y = groundStickForce;
+            else _velocity.y += gravity * Time.deltaTime;
+            Vector3 pausedMotion = new Vector3(0f, _velocity.y, 0f);
+            controller.Move(pausedMotion * Time.deltaTime);
+            return;
+        }
+
         if (jumpPressed) _timeSinceJumpPressed = 0f; else _timeSinceJumpPressed += Time.deltaTime;
 
         if (isGrounded) _timeSinceLeftGround = 0f; else _timeSinceLeftGround += Time.deltaTime;
 
         isSprinting = sprintHeld;
+
+
         float targetSpeed = isSprinting ? sprintSpeed : walkSpeed;
         targetSpeed *= Mathf.Clamp01(move.magnitude);
 

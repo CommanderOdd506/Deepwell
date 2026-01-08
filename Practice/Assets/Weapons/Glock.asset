@@ -19,7 +19,7 @@ MonoBehaviour:
   armType: 1
   fireMode: 0
   recoilData:
-    kick: {x: 0.02, y: 0.02}
+    kick: {x: 0.02, y: 0.03}
     kickBack: 0.08
     returnSpeed: 18
     snappiness: 22

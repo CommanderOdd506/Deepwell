@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviourPun
     private bool isAlive;
     bool deathProcessed;
     int actorNumber;
+    public GameObject ragdollPrefab;
 
 
     private void Start()
@@ -24,7 +25,6 @@ public class PlayerHealth : MonoBehaviourPun
         playerCombatController = GetComponent<PlayerCombatController>();
         Initialize();
 
-        // Pass weaponId as parameter
         int weaponId = playerCombatController.GetCurrentWeapon()?.weaponId ?? -1;
 
         photonView.RPC(
@@ -48,7 +48,6 @@ public class PlayerHealth : MonoBehaviourPun
             return;
         }
 
-        // Find weapon from DamageSystem's database
         WeaponData weapon = DamageSystem.Instance.FindWeaponById(weaponId);
         if (weapon == null)
         {
@@ -98,29 +97,51 @@ public class PlayerHealth : MonoBehaviourPun
         isAlive = true;
         deathProcessed = false;
 
+        // ADDED: Re-enable colliders on respawn
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+        foreach (Collider col in colliders)
+        {
+            col.enabled = true;
+        }
+
         UpdateUI();
     }
+
     public void SetHealthUI(TextMeshProUGUI ui)
     {
         healthText = ui;
         UpdateUI();
     }
+
     void CheckDeath()
     {
         if (!isAlive || deathProcessed)
             return;
 
     }
+
     [PunRPC]
     void RPC_OnDeath()
     {
-        if (deathProcessed) return;
+        if (deathProcessed) return;  // This should work, but let's add more safety
 
         deathProcessed = true;
         isAlive = false;
 
-        // Disable input, weapons, etc.
+        // Disable colliders
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+        foreach (Collider col in colliders)
+        {
+            col.enabled = false;
+        }
+
+        // CHANGED: Only spawn ragdoll once (remove the nested RPC call issue)
+        if (ragdollPrefab != null)
+        {
+            Instantiate(ragdollPrefab, transform.position, transform.rotation);
+        }
     }
+
 
     private void UpdateUI()
     {

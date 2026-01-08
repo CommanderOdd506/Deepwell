@@ -20,7 +20,7 @@ MonoBehaviour:
   fireMode: 0
   recoilData:
     kick: {x: 0.02, y: 0.02}
-    kickBack: 0.08
+    kickBack: 0.2
     returnSpeed: 18
     snappiness: 22
   damage: 35

@@ -27,7 +27,7 @@ MonoBehaviour:
     value: 1080
   ColorDepth:
     overrideState: 1
-    value: 0.46
+    value: 0.392
   DitherPattern:
     overrideState: 1
     value: {fileID: 2800000, guid: 33e4517dca3a2274ba1532dd85e3c541, type: 3}
@@ -59,7 +59,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 1.84
+    value: 2.08
   threshold:
     overrideState: 1
     value: 1
@@ -109,13 +109,39 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.77
+    value: 0.354
   size:
     overrideState: 1
     value: 1.39
   lumContrib:
     overrideState: 1
     value: 0.8
+--- !u!114 &-1957221843791388177
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6050e2d5de785ce4d931e4dbdbf2d755, type: 3}
+  m_Name: ChromaticAberration
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  spectralLut:
+    overrideState: 1
+    value: {fileID: 0}
+    defaultState: 1
+  intensity:
+    overrideState: 1
+    value: 0.109
+  fastMode:
+    overrideState: 1
+    value: 0
 --- !u!114 &-26246822990979807
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -178,8 +204,8 @@ MonoBehaviour:
   - {fileID: -8157796940794217461}
   - {fileID: -26246822990979807}
   - {fileID: 6453723615270018652}
-  - {fileID: 8911486357076089812}
   - {fileID: -6967769561960702364}
+  - {fileID: -1957221843791388177}
 --- !u!114 &5354538099222327047
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -284,13 +310,13 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 1, y: 1, z: 1, w: -0.019152483}
+    value: {x: 0.9957951, y: 0.9968461, z: 1, w: -0.019152483}
   gamma:
     overrideState: 1
-    value: {x: 0.99935216, y: 1, z: 0.9886838, w: 0.21531099}
+    value: {x: 1, y: 0.9805682, z: 0.9488435, w: 0.21531099}
   gain:
     overrideState: 1
-    value: {x: 1, y: 1, z: 1, w: 0.35885188}
+    value: {x: 0.97602665, y: 0.99715364, z: 1, w: 0.35885188}
   masterCurve:
     overrideState: 1
     value:
@@ -1525,55 +1551,3 @@ MonoBehaviour:
   scale:
     overrideState: 1
     value: 1
---- !u!114 &8911486357076089812
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1cb7e9e120078f43bce4f0b1be547a7, type: 3}
-  m_Name: AmbientOcclusion
-  m_EditorClassIdentifier: 
-  active: 1
-  enabled:
-    overrideState: 1
-    value: 1
-  mode:
-    overrideState: 1
-    value: 1
-  intensity:
-    overrideState: 1
-    value: 0.31
-  color:
-    overrideState: 1
-    value: {r: 0, g: 0, b: 0, a: 1}
-  ambientOnly:
-    overrideState: 1
-    value: 1
-  noiseFilterTolerance:
-    overrideState: 1
-    value: 0
-  blurTolerance:
-    overrideState: 1
-    value: -4.6
-  upsampleTolerance:
-    overrideState: 1
-    value: -12
-  thicknessModifier:
-    overrideState: 1
-    value: 1
-  zBias:
-    overrideState: 1
-    value: 0.0001
-  directLightingStrength:
-    overrideState: 1
-    value: 0
-  radius:
-    overrideState: 1
-    value: 0.25
-  quality:
-    overrideState: 1
-    value: 2
