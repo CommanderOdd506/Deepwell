@@ -23,6 +23,7 @@ MonoBehaviour:
     kickBack: 0.08
     returnSpeed: 18
     snappiness: 22
+    cameraPunch: {x: 0.05, y: 0.2}
   damage: 18
   rpm: 1000
   range: 0

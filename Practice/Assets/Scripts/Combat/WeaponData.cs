@@ -20,6 +20,8 @@ public class RecoilData
     public float kickBack;        // Z axis pull
     public float returnSpeed;     // How fast it resets
     public float snappiness;      // How fast it kicks
+    [Header("Camera Punch")]
+    public Vector2 cameraPunch = new Vector2(0.5f, 0.2f);
 }
 
 public enum FireMode

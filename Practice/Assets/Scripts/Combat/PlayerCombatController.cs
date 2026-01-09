@@ -41,9 +41,10 @@ public class PlayerCombatController : MonoBehaviourPun
     public GameObject viewModelUI;
     public GameObject scope;
     public Camera cam;
-    public float zoomFOV;
+    public float zoomFOV = 50f;
     private float startingFOV;
     public GameObject crosshair;
+    public GameObject hitMarker;
 
     public float dropDistance = 80f;
 
@@ -112,7 +113,26 @@ public class PlayerCombatController : MonoBehaviourPun
 
         lastFireInput = fireInput;
     }
+    [PunRPC]
+    void RPC_ShowHitMarker()
+    {
+        if (!photonView.IsMine)
+            return;
+        if (isScoped)
+            return;
+        if (hitMarker != null)
+        {
+            StopAllCoroutines();
+            StartCoroutine(ShowHitMarkerForDuration(0.2f));
+        }
+    }
 
+    IEnumerator ShowHitMarkerForDuration(float duration)
+    {
+        hitMarker.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        hitMarker.SetActive(false);
+    }
     void HandleFireInput(bool held, bool pressed)
     {
         if (currentWeapon == null || isReloading || magAmmo <= 0)
@@ -263,10 +283,11 @@ public class PlayerCombatController : MonoBehaviourPun
         if (!isScoped)
         {
             isScoped = true;
-            cam.fieldOfView = 50;
+            cam.fieldOfView = zoomFOV;
             scope.SetActive(true);
             crosshair.SetActive(false);
             viewModelUI.SetActive(false);
+            hitMarker.SetActive(false);
         }
     }
 

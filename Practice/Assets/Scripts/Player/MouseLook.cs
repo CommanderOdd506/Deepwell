@@ -15,6 +15,9 @@ public class MouseLook : MonoBehaviourPun
 
     public bool canMove = true;
 
+    [Header("Recoil")]
+    [SerializeField] private PlayerRecoil playerRecoil;
+
     void Start()
     {
         cam = GetComponentInChildren<Camera>();
@@ -39,6 +42,9 @@ public class MouseLook : MonoBehaviourPun
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+
+        if (playerRecoil == null)
+            playerRecoil = GetComponentInChildren<PlayerRecoil>();
     }
 
     public void ToggleMovement(bool value)
@@ -55,7 +61,6 @@ public class MouseLook : MonoBehaviourPun
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-
     }
 
     void Update()
@@ -66,11 +71,15 @@ public class MouseLook : MonoBehaviourPun
         float mouseX = Input.GetAxisRaw("Mouse X") * sensitivity;
         float mouseY = Input.GetAxisRaw("Mouse Y") * sensitivity;
 
-        // Horizontal rotation
-        playerBody.Rotate(Vector3.up * mouseX);
+        // Get recoil offset
+        Vector2 recoilOffset = playerRecoil != null ? playerRecoil.RecoilRotation : Vector2.zero;
 
-        // Vertical rotation
+        // Horizontal rotation (body + horizontal recoil)
+        playerBody.Rotate(Vector3.up * (mouseX + recoilOffset.y));
+
+        // CHANGED: Apply recoil directly to pitch (snappy!)
         _pitch -= mouseY;
+        _pitch += recoilOffset.x;  // Add recoil BEFORE clamping
         _pitch = Mathf.Clamp(_pitch, pitchMin, pitchMax);
         head.localRotation = Quaternion.Euler(_pitch, 0f, 0f);
     }

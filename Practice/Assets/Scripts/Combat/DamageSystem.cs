@@ -59,21 +59,42 @@ public class DamageSystem : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsMasterClient)
             return;
+
         DebugHitscanGizmo gizmo = GetComponent<DebugHitscanGizmo>();
         if (gizmo != null)
         {
             gizmo.RecordRay(origin, direction, range);
-
         }
+
         if (Physics.Raycast(origin, direction, out RaycastHit hit, range))
         {
             PlayerHealth target = hit.collider.GetComponentInParent<PlayerHealth>();
             if (target == null)
                 return;
+
+            // ADDED: Prevent self-damage
+            if (target.photonView.Owner.ActorNumber == shooterActor)
+                return;
+
             ApplyDamage(target.photonView.Owner.ActorNumber, damage);
+            NotifyHitMarker(shooterActor);
         }
     }
 
+    public void NotifyHitMarker(int actorNumber)
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        if (!playerHealthMap.TryGetValue(actorNumber, out PlayerHealth targetHealth))
+            return;
+
+        PlayerCombatController targetController = targetHealth.GetComponent<PlayerCombatController>();
+        if (targetController != null)
+        {
+            targetController.photonView.RPC("RPC_ShowHitMarker", RpcTarget.All);
+        }
+    }
     public void ApplyDamage(int targetActorNumber, int damage)
     {
         if (!PhotonNetwork.IsMasterClient)

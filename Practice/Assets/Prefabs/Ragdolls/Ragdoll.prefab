@@ -44,6 +44,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Idle Aiming (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 654297498687036359, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 654297498687036359, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 718462992209211264, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 718462992209211264, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 937201575432014175, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.058
@@ -83,6 +99,122 @@ PrefabInstance:
     - target: {fileID: 937201575432014175, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059191258550123932, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059191258550123932, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4074998603866996743, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4284504935047575248, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4317649468392866881, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4333521717803859061, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4561940125803638048, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4874183130843011871, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4874183130843011871, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5286436401421072369, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5286436401421072369, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5748147655516736381, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 5891292501568561271, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5891292501568561271, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6382164777618114384, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6382164777618114384, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6767896099094118821, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 7263710105121580733, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7263710105121580733, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432948438588388746, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 7996436018844352816, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126550480999703160, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126550480999703160, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8186156091774192072, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 8189610336414633420, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8189610336414633420, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8220913332457087578, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8220913332457087578, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8721188820276239319, guid: 0bf44e8542932b0429cf5b9684f34229, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 1024
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

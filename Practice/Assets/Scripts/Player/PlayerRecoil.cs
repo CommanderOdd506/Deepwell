@@ -7,6 +7,9 @@ public class PlayerRecoil : MonoBehaviourPun
     Vector3 currentRecoil;
     Vector3 targetRecoil;
 
+    private Vector2 recoilRotation;
+    public Vector2 RecoilRotation => recoilRotation;
+
     void Start()
     {
         if (!photonView.IsMine) return;
@@ -17,6 +20,7 @@ public class PlayerRecoil : MonoBehaviourPun
     {
         if (!photonView.IsMine) return;
         UpdateRecoil();
+        UpdateCameraRecoil();
     }
 
     public void ApplyRecoil(RecoilData data)
@@ -25,6 +29,11 @@ public class PlayerRecoil : MonoBehaviourPun
             Random.Range(-data.kick.x, data.kick.x),
             data.kick.y,
             -data.kickBack
+        );
+
+        recoilRotation += new Vector2(
+            -data.cameraPunch.x,
+            Random.Range(-data.cameraPunch.y, data.cameraPunch.y)
         );
     }
 
@@ -43,5 +52,14 @@ public class PlayerRecoil : MonoBehaviourPun
         );
 
         transform.localPosition = originalPos + currentRecoil;
+    }
+
+    void UpdateCameraRecoil()
+    {
+        recoilRotation = Vector2.Lerp(
+            recoilRotation,
+            Vector2.zero,
+            Time.deltaTime * 8f  // CHANGED: Higher = faster decay (try 8-15)
+        );
     }
 }

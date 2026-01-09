@@ -50,6 +50,7 @@ MonoBehaviour:
   - RPC_SyncWeaponVisuals
   - RPC_SetCarDirection
   - RPC_SpawnRagdoll
+  - RPC_ShowHitMarker
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
