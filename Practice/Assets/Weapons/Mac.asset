@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mac
   m_EditorClassIdentifier: 
   weaponId: 10
-  shotClip: {fileID: 0}
+  shotClip: {fileID: 8300000, guid: 3afa6fab94005b9488930a827d438f7d, type: 3}
   reloadClip: {fileID: 0}
   type: 3
   armType: 1

@@ -23,6 +23,8 @@ public class VisibilityControl : MonoBehaviourPun
         StartCoroutine(ApplyVisibilityNextFrame());
     }
 
+
+
     IEnumerator ApplyVisibilityNextFrame()
     {
         yield return null; // wait 1 frame for Photon ownership

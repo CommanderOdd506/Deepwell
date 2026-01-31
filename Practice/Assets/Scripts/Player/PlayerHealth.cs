@@ -11,11 +11,18 @@ public class PlayerHealth : MonoBehaviourPun
     public int maxHealth;
     public TextMeshProUGUI healthText;
     private PlayerCombatController playerCombatController;
+    private MouseLook mouseLook;
+    private PlayerMovement playerMovement;
+    private PlayerInput playerInput;
     private bool isAlive;
     bool deathProcessed;
     int actorNumber;
-    public GameObject ragdollPrefab;
+    
+    public float respawnTimer = 3;
 
+    [Header("Player Reference")]
+    public GameObject ragdollPrefab;
+    public GameObject deathPanel;
 
     private void Start()
     {
@@ -23,6 +30,9 @@ public class PlayerHealth : MonoBehaviourPun
             return;
 
         playerCombatController = GetComponent<PlayerCombatController>();
+        playerMovement = GetComponent<PlayerMovement>();
+        playerInput = GetComponent<PlayerInput>();
+        mouseLook = GetComponent<MouseLook>();
         Initialize();
 
         int weaponId = playerCombatController.GetCurrentWeapon()?.weaponId ?? -1;
@@ -92,18 +102,19 @@ public class PlayerHealth : MonoBehaviourPun
     void RPC_Respawn(Vector3 spawnPoint)
     {
         transform.position = spawnPoint;
-
+        deathPanel.SetActive(false);
+        playerInput.ToggleInput(true);
+        playerMovement.ToggleMovement(true);
+        mouseLook.ToggleMovement(true);
         currentHealth = maxHealth;
         isAlive = true;
         deathProcessed = false;
 
-        // ADDED: Re-enable colliders on respawn
         Collider[] colliders = GetComponentsInChildren<Collider>();
         foreach (Collider col in colliders)
         {
             col.enabled = true;
         }
-
         UpdateUI();
     }
 
@@ -119,26 +130,47 @@ public class PlayerHealth : MonoBehaviourPun
             return;
 
     }
+    [PunRPC]
+    void RPC_SpawnRagdoll(Vector3 position, Quaternion rotation)
+    {
+        if (ragdollPrefab == null)
+        {
+            Debug.LogWarning("[PlayerHealth] No ragdollPrefab assigned.");
+            return;
+        }
 
+        Instantiate(ragdollPrefab, position, rotation);
+    }
     [PunRPC]
     void RPC_OnDeath()
     {
-        if (deathProcessed) return;  // This should work, but let's add more safety
-
+        if (deathProcessed) return;
         deathProcessed = true;
+
         isAlive = false;
 
-        // Disable colliders
-        Collider[] colliders = GetComponentsInChildren<Collider>();
-        foreach (Collider col in colliders)
-        {
-            col.enabled = false;
-        }
+        // Spawn ragdoll on ALL clients
+        photonView.RPC(
+            "RPC_SpawnRagdoll",
+            RpcTarget.All,
+            transform.position,
+            transform.rotation
+        );
 
-        // CHANGED: Only spawn ragdoll once (remove the nested RPC call issue)
-        if (ragdollPrefab != null)
+        // ONLY local player handles UI/input/colliders
+        if (photonView.IsMine)
         {
-            Instantiate(ragdollPrefab, transform.position, transform.rotation);
+            if (deathPanel) deathPanel.SetActive(true);
+            if (playerInput) playerInput.ToggleInput(false);
+            if (playerMovement) playerMovement.ToggleMovement(false);
+            if (mouseLook) mouseLook.ToggleMovement(false);
+
+            Collider[] colliders = GetComponentsInChildren<Collider>(true);
+            foreach (Collider col in colliders)
+                col.enabled = false;
+
+            // Move body out of the way locally
+            transform.position += Vector3.down * 20f;
         }
     }
 

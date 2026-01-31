@@ -31,6 +31,7 @@ public class PlayerCombatController : MonoBehaviourPun
     [SerializeField] WeaponReference[] weaponDatabase;
     int currentWeaponIndex = 0;
 
+    public Transform muzzle;
     [Header("Arm Types")]
     public GameObject rifleArms;
     public GameObject pistolArms;
@@ -261,7 +262,7 @@ public class PlayerCombatController : MonoBehaviourPun
         {
             fireDelay = 60f / Mathf.Max(currentWeapon.rpm, 1f);
         }
-
+        AudioManager.Instance.PlaySFX2D(currentWeapon.shotClip, 1f);
         nextFireTime = Time.time + fireDelay;
         magAmmo--;
         UpdateUI();

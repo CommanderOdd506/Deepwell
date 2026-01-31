@@ -51,6 +51,8 @@ MonoBehaviour:
   - RPC_SetCarDirection
   - RPC_SpawnRagdoll
   - RPC_ShowHitMarker
+  - RPC_ResetBodyLayer
+  - RPC_SetBodyLayer
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

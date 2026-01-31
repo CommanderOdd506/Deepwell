@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -14,6 +14,7 @@ public class DamageSystem : MonoBehaviourPunCallbacks
         new Dictionary<int, PlayerHealth>();
     private Dictionary<int, int> healthByActor = new Dictionary<int, int>();
     private Dictionary<int, WeaponData> weaponByActor = new Dictionary<int, WeaponData>();
+    private Dictionary<int, bool> isAliveByActor = new Dictionary<int, bool>();
     [SerializeField] private WeaponData[] weaponDatabase;
     void Awake()
     {
@@ -44,6 +45,7 @@ public class DamageSystem : MonoBehaviourPunCallbacks
         playerHealthMap[actorNumber] = health;
         healthByActor[actorNumber] = health.maxHealth;
         weaponByActor[actorNumber] = startingWeapon;
+        isAliveByActor[actorNumber] = true;
 
         Debug.Log($"[DamageSystem] Registered Actor {actorNumber}");
     }
@@ -100,8 +102,14 @@ public class DamageSystem : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient)
             return;
 
-        if (!playerHealthMap.TryGetValue(targetActorNumber, out PlayerHealth targetHealth))
+        if (isAliveByActor.TryGetValue(targetActorNumber, out bool alive) && !alive)
             return;
+
+        if (!playerHealthMap.TryGetValue(targetActorNumber, out PlayerHealth targetHealth) || targetHealth == null)
+        {
+            CleanupActor(targetActorNumber);
+            return;
+        }
 
         if (!healthByActor.TryGetValue(targetActorNumber, out int current))
             current = targetHealth.maxHealth;
@@ -114,6 +122,8 @@ public class DamageSystem : MonoBehaviourPunCallbacks
 
         if (newHealth <= 0)
         {
+            isAliveByActor[targetActorNumber] = false;
+
             targetHealth.photonView.RPC("RPC_OnDeath", RpcTarget.All);
             NotifyDeath(targetActorNumber);
         }
@@ -135,9 +145,18 @@ public class DamageSystem : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient)
             return;
 
-        playerHealthMap.Remove(otherPlayer.ActorNumber);
-        healthByActor.Remove(otherPlayer.ActorNumber);
+        CleanupActor(otherPlayer.ActorNumber);
     }
+    private void CleanupActor(int actorNumber)
+    {
+        playerHealthMap.Remove(actorNumber);
+        healthByActor.Remove(actorNumber);
+        weaponByActor.Remove(actorNumber);
+        isAliveByActor.Remove(actorNumber);
+
+        Debug.Log($"[DamageSystem] Cleaned up Actor {actorNumber}");
+    }
+
     [PunRPC]
     public void RPC_UpdateWeapon(int actorNumber, int weaponId)
     {
@@ -168,10 +187,21 @@ public class DamageSystem : MonoBehaviourPunCallbacks
     {
         Debug.Log($"Player {deadActorNumber} died.");
 
-        if (!playerHealthMap.TryGetValue(deadActorNumber, out PlayerHealth health))
-            return;
+       
+        StartCoroutine(RespawnDelay(deadActorNumber));
+        
+    }
 
+    private IEnumerator RespawnDelay(int deadActorNumber)
+    {
+        yield return new WaitForSeconds(3);
+        if (!playerHealthMap.TryGetValue(deadActorNumber, out PlayerHealth health) || health == null)
+        {
+            CleanupActor(deadActorNumber);
+            yield return null;
+        }
         healthByActor[deadActorNumber] = health.maxHealth;
+        isAliveByActor[deadActorNumber] = true;
 
         Vector3 spawnPoint = spawnPlayers.GetRandomSpawn();
 

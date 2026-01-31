@@ -21,6 +21,8 @@ public class PlayerInput : MonoBehaviourPun
     [Header("Util")]
     public bool pausePressed;
 
+    private bool canInput = true;
+
     void Awake()
     {
         if (!photonView.IsMine)
@@ -30,8 +32,15 @@ public class PlayerInput : MonoBehaviourPun
         }
     }
 
+    public void ToggleInput(bool value)
+    {
+        canInput = value;
+    }
+
     void Update()
     {
+        if (!canInput)
+            return;
         move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (move.sqrMagnitude > 1f) move.Normalize();
 

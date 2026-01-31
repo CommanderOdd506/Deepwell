@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ump
   m_EditorClassIdentifier: 
   weaponId: 11
-  shotClip: {fileID: 0}
+  shotClip: {fileID: 8300000, guid: 05c2ffab8cfe64a4c84adb1d95951df3, type: 3}
   reloadClip: {fileID: 0}
   type: 3
   armType: 0
