@@ -40,6 +40,7 @@ public class AudioManager : MonoBehaviourPun
         }
     }
 
+    [PunRPC]
     public void PlaySFX3D(AudioClip clip, Vector3 position, float volume = 1f, float pitchMin = 0.95f, float pitchMax = 1.05f)
     {
         if (!clip) return;
@@ -55,6 +56,7 @@ public class AudioManager : MonoBehaviourPun
         src.Play();
     }
 
+    [PunRPC]
     public void PlaySFX2D(AudioClip clip, float volume = 1f)
     {
         if (!clip) return;

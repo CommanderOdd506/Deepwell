@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Glock
   m_EditorClassIdentifier: 
   weaponId: 5
-  shotClip: {fileID: 0}
+  shotClip: {fileID: 8300000, guid: acf30e83a8aa4234ba5e3e5ffa6ebb65, type: 3}
   reloadClip: {fileID: 0}
   type: 1
   armType: 1
@@ -21,8 +21,8 @@ MonoBehaviour:
   recoilData:
     kick: {x: 0.02, y: 0.03}
     kickBack: 0.08
-    returnSpeed: 18
-    snappiness: 22
+    returnSpeed: 40
+    snappiness: 40
     cameraPunch: {x: 0.1, y: 0.08}
   damage: 25
   rpm: 0

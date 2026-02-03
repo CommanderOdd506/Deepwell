@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Spas
   m_EditorClassIdentifier: 
   weaponId: 0
-  shotClip: {fileID: 0}
+  shotClip: {fileID: 8300000, guid: aa0c0f74a6b25014bad2b51ab15ae226, type: 3}
   reloadClip: {fileID: 0}
   type: 5
   armType: 0
@@ -21,8 +21,9 @@ MonoBehaviour:
   recoilData:
     kick: {x: 0.02, y: 0.05}
     kickBack: 0.14
-    returnSpeed: 18
-    snappiness: 22
+    returnSpeed: 40
+    snappiness: 40
+    cameraPunch: {x: 0.5, y: 0.2}
   damage: 7
   rpm: 0
   range: 0

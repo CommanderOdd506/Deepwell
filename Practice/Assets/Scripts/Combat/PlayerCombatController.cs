@@ -263,17 +263,28 @@ public class PlayerCombatController : MonoBehaviourPun
             fireDelay = 60f / Mathf.Max(currentWeapon.rpm, 1f);
         }
         AudioManager.Instance.PlaySFX2D(currentWeapon.shotClip, 1f);
+
+ 
         nextFireTime = Time.time + fireDelay;
         magAmmo--;
         UpdateUI();
         playerRecoil.ApplyRecoil(currentWeapon.recoilData);
 
-        DamageSystem.Instance.photonView.RPC(
+        if (PhotonNetwork.IsConnected)
+        {
+            AudioManager.Instance.photonView.RPC(
+            "PlaySFX3D",
+            RpcTarget.Others,
+            currentWeapon.shotClip,
+            playerCamera.transform.position);
+
+            DamageSystem.Instance.photonView.RPC(
             "RPC_RequestFire",
             RpcTarget.MasterClient,
             playerCamera.transform.position,
-            playerCamera.transform.forward
-        );
+            playerCamera.transform.forward);
+
+        }
     }
 
     void ActivateScope()

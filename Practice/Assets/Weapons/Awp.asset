@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Awp
   m_EditorClassIdentifier: 
   weaponId: 18
-  shotClip: {fileID: 0}
+  shotClip: {fileID: 8300000, guid: 2d4af78bd0aeb6a46b93c0bb8ff03541, type: 3}
   reloadClip: {fileID: 0}
   type: 4
   armType: 0
@@ -21,8 +21,9 @@ MonoBehaviour:
   recoilData:
     kick: {x: 0.02, y: 0.02}
     kickBack: 0.08
-    returnSpeed: 18
-    snappiness: 22
+    returnSpeed: 40
+    snappiness: 40
+    cameraPunch: {x: 0.5, y: 0.2}
   damage: 100
   rpm: 0
   range: 0

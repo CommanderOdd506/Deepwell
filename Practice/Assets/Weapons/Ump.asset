@@ -21,8 +21,8 @@ MonoBehaviour:
   recoilData:
     kick: {x: 0.02, y: 0.01}
     kickBack: 0.03
-    returnSpeed: 18
-    snappiness: 22
+    returnSpeed: 40
+    snappiness: 40
     cameraPunch: {x: 0.04, y: 0.09}
   damage: 24
   rpm: 600

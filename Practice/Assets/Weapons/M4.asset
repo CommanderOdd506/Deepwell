@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: M4
   m_EditorClassIdentifier: 
   weaponId: 13
-  shotClip: {fileID: 8300000, guid: c91b38e8e67c3354ca58b4eac615af07, type: 3}
+  shotClip: {fileID: 8300000, guid: 94012c926e40bc24cb35a656c9e254ab, type: 3}
   reloadClip: {fileID: 0}
   type: 2
   armType: 0
@@ -21,9 +21,9 @@ MonoBehaviour:
   recoilData:
     kick: {x: 0.02, y: 0.01}
     kickBack: 0.03
-    returnSpeed: 18
-    snappiness: 22
-    cameraPunch: {x: 0.5, y: 0.2}
+    returnSpeed: 40
+    snappiness: 40
+    cameraPunch: {x: 0.29, y: 0.11}
   damage: 30
   rpm: 750
   range: 0

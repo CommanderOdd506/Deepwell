@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Revolver
   m_EditorClassIdentifier: 
   weaponId: 6
-  shotClip: {fileID: 0}
+  shotClip: {fileID: 8300000, guid: dc02fbdaada6fbd4d9cc2c388c5ffff0, type: 3}
   reloadClip: {fileID: 0}
   type: 1
   armType: 1
@@ -21,8 +21,9 @@ MonoBehaviour:
   recoilData:
     kick: {x: 0.02, y: 0.02}
     kickBack: 0.2
-    returnSpeed: 18
-    snappiness: 22
+    returnSpeed: 40
+    snappiness: 40
+    cameraPunch: {x: 0.5, y: 0.2}
   damage: 35
   rpm: 0
   range: 0

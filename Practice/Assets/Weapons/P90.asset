@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: P90
   m_EditorClassIdentifier: 
   weaponId: 12
-  shotClip: {fileID: 0}
+  shotClip: {fileID: 8300000, guid: c91b38e8e67c3354ca58b4eac615af07, type: 3}
   reloadClip: {fileID: 0}
   type: 3
   armType: 1
@@ -21,10 +21,11 @@ MonoBehaviour:
   recoilData:
     kick: {x: 0.02, y: 0.02}
     kickBack: 0.05
-    returnSpeed: 18
-    snappiness: 22
+    returnSpeed: 40
+    snappiness: 40
+    cameraPunch: {x: 0.22, y: 0.14}
   damage: 20
-  rpm: 900
+  rpm: 850
   range: 0
   magSize: 50
   reloadTime: 3.5

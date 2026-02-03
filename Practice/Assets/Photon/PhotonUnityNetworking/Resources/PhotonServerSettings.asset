@@ -53,6 +53,8 @@ MonoBehaviour:
   - RPC_ShowHitMarker
   - RPC_ResetBodyLayer
   - RPC_SetBodyLayer
+  - PlaySFX2D
+  - PlaySFX3D
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
