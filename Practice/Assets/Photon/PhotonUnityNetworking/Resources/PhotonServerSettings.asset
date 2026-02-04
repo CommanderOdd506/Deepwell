@@ -55,6 +55,7 @@ MonoBehaviour:
   - RPC_SetBodyLayer
   - PlaySFX2D
   - PlaySFX3D
+  - RPC_PlayWeaponShot3D
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

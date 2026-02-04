@@ -128,6 +128,39 @@ public class DamageSystem : MonoBehaviourPunCallbacks
             NotifyDeath(targetActorNumber);
         }
     }
+
+    //Stoguns 
+    void ProcessShotgun(int shooterActor, Vector3 origin, Vector3 forward, WeaponData weapon)
+    {
+        int pellets = weapon.pelletCount;
+        float spread = weapon.spread;
+        float range = weapon.range;
+
+        for (int i = 0; i < pellets; i++)
+        {
+            Vector3 pelletDir = GetSpreadDirection(forward, spread);
+
+            // do your normal hitscan per pellet
+            ProcessHitscan(
+                shooterActor,
+                origin,
+                pelletDir,
+                weapon.damage,
+                range
+            );
+        }
+    }
+
+    Vector3 GetSpreadDirection(Vector3 forward, float spreadAngle)
+    {
+        // Random inside cone
+        float yaw = Random.Range(-spreadAngle, spreadAngle);
+        float pitch = Random.Range(-spreadAngle, spreadAngle);
+
+        Quaternion spreadRot = Quaternion.Euler(pitch, yaw, 0f);
+        return spreadRot * forward;
+    }
+
     [ContextMenu("Test Damage First Player")]
     void TestDamage()
     {
@@ -229,13 +262,21 @@ public class DamageSystem : MonoBehaviourPunCallbacks
         int damage = weapon.damage;
         float range = 100f;
 
-        ProcessHitscan(
+        if (weapon.type == WeaponType.Shotgun)
+        {
+            ProcessShotgun(info.Sender.ActorNumber, origin, direction, weapon);
+        }
+        else
+        {
+            ProcessHitscan(
             info.Sender.ActorNumber,
             origin,
             direction,
             damage,
             range
         );
+        }
+        
     }
 
 }

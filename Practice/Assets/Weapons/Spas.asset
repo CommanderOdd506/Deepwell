@@ -26,10 +26,10 @@ MonoBehaviour:
     cameraPunch: {x: 0.5, y: 0.2}
   damage: 7
   rpm: 0
-  range: 0
+  range: 100
   magSize: 8
   reloadTime: 8.5
   isScoped: 0
   pelletCount: 9
-  spread: 0.3
+  spread: 2.3
   splashRadius: 0

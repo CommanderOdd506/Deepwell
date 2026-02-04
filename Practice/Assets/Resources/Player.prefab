@@ -7481,6 +7481,7 @@ MonoBehaviour:
   - weaponData: {fileID: 11400000, guid: 4b850d86be1012a4a80f461ba5df16e6, type: 2}
     objectReference: {fileID: 7795559917444505805}
     worldReference: {fileID: 888009132276906428}
+  muzzle: {fileID: 6545348623509610683}
   rifleArms: {fileID: 3638007931788747880}
   pistolArms: {fileID: 5268767168315330709}
   ammoText: {fileID: 1356018016547960835}
@@ -7526,7 +7527,6 @@ MonoBehaviour:
   healthText: {fileID: 2134189657557131122}
   respawnTimer: 3
   ragdollPrefab: {fileID: 530953766757157123, guid: bdef57ad9fc2f0c46878ba2acc32ba50, type: 3}
-  body: {fileID: 4916168593078311034}
   deathPanel: {fileID: 4927445545882315702}
 --- !u!114 &7150662688866153371
 MonoBehaviour:

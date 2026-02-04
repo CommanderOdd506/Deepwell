@@ -7806,7 +7806,8 @@ Transform:
   m_LocalPosition: {x: 254.8473, y: 142.03746, z: -23.459127}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 598404785}
   m_Father: {fileID: 5377717591387509003}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &381645002 stripped
@@ -12208,11 +12209,11 @@ Transform:
   m_GameObject: {fileID: 598404784}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -254.8473, y: -142.03746, z: 23.459127}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5377717591387509003}
+  m_Father: {fileID: 381016289}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &598404786
 MonoBehaviour:
@@ -12273,6 +12274,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adfe8f626508bd045a2c3158bd4e48ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gizmoDuration: 1
+  originSphereSize: 0.05
+  maxRays: 200
 --- !u!1 &599740528
 GameObject:
   m_ObjectHideFlags: 0
@@ -21726,9 +21730,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6124c522a45dbe7429c9b90be12acaae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weapons:
+  - {fileID: 11400000, guid: f407f6213403ba64994d39f420510778, type: 2}
+  - {fileID: 11400000, guid: 74441da41e8a064429b7a337069cf4a9, type: 2}
+  - {fileID: 11400000, guid: 401a69f9d64c8a54f91319270f6f81d6, type: 2}
+  - {fileID: 11400000, guid: ceeb19d1dbcba3248a7ed9e65644b000, type: 2}
+  - {fileID: 11400000, guid: 2941fa18546627b40b238c3fc8ddf775, type: 2}
+  - {fileID: 11400000, guid: 6da7cf5a397b2d34cbaa0c638558e47e, type: 2}
+  - {fileID: 11400000, guid: 0847dc6ddee6e64418817f1c889ff283, type: 2}
+  - {fileID: 11400000, guid: c3d75aec3097d5e43880bd06db54bfcc, type: 2}
+  - {fileID: 11400000, guid: edf410d81ff26804781dc154f923bf3b, type: 2}
+  - {fileID: 11400000, guid: b4d1943bed4fdb24b91076760ed30c60, type: 2}
+  - {fileID: 11400000, guid: a57e469cb6a740848b461c58860d5ca5, type: 2}
+  - {fileID: 11400000, guid: 419685c58b00efa428b2d9134f4e80ca, type: 2}
+  - {fileID: 11400000, guid: 62d9307383eb73e44a3918428f67fa11, type: 2}
+  - {fileID: 11400000, guid: 7b504007ca4c72b43ac2d0321d321f37, type: 2}
+  - {fileID: 11400000, guid: 4a6eddf2b2ad1af44b817558115cd08d, type: 2}
+  - {fileID: 11400000, guid: 991a0e14175adef4a9ea82d1d671a5a0, type: 2}
+  - {fileID: 11400000, guid: 4281abcbc0066cd40a3b6c664e66a2d9, type: 2}
+  - {fileID: 11400000, guid: 4b850d86be1012a4a80f461ba5df16e6, type: 2}
   musicSource: {fileID: 0}
-  twoDSource: {fileID: 1054228753}
-  sfxPrefab: {fileID: 5730217738169477060, guid: 18a356344f5271d42975530d17d40e57, type: 3}
+  sfx2DSource: {fileID: 1054228753}
+  sfx3DPrefab: {fileID: 5730217738169477060, guid: 18a356344f5271d42975530d17d40e57, type: 3}
   poolSize: 20
 --- !u!82 &1054228753
 AudioSource:
@@ -33027,10 +33050,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2296501785708748651, guid: de5af7ff1aeef69449f9a64e2bb6b9b7, type: 3}
-      propertyPath: muzzle
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4369505567322094044, guid: de5af7ff1aeef69449f9a64e2bb6b9b7, type: 3}
       propertyPath: sceneViewId
       value: 1
@@ -33038,10 +33057,6 @@ PrefabInstance:
     - target: {fileID: 5799374872171032429, guid: de5af7ff1aeef69449f9a64e2bb6b9b7, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5799374872171032429, guid: de5af7ff1aeef69449f9a64e2bb6b9b7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -52390,7 +52405,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 381016289}
-  - {fileID: 598404785}
   - {fileID: 1054228751}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

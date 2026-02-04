@@ -262,7 +262,6 @@ public class PlayerCombatController : MonoBehaviourPun
         {
             fireDelay = 60f / Mathf.Max(currentWeapon.rpm, 1f);
         }
-        AudioManager.Instance.PlaySFX2D(currentWeapon.shotClip, 1f);
 
  
         nextFireTime = Time.time + fireDelay;
@@ -272,17 +271,18 @@ public class PlayerCombatController : MonoBehaviourPun
 
         if (PhotonNetwork.IsConnected)
         {
-            AudioManager.Instance.photonView.RPC(
-            "PlaySFX3D",
-            RpcTarget.Others,
-            currentWeapon.shotClip,
-            playerCamera.transform.position);
+            // local instant feedback
+            AudioManager.Instance.PlayWeaponShot2D_Local(currentWeapon.weaponId, 1f);
+
+            // networked 3D sound for everyone else
+            AudioManager.Instance.PlayWeaponShot3D_Networked(currentWeapon.weaponId, muzzle.position, 1f);
 
             DamageSystem.Instance.photonView.RPC(
             "RPC_RequestFire",
             RpcTarget.MasterClient,
             playerCamera.transform.position,
-            playerCamera.transform.forward);
+            playerCamera.transform.forward
+            );
 
         }
     }
