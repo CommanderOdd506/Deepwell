@@ -131,33 +131,12 @@ public class PlayerHealth : MonoBehaviourPun
 
     }
     [PunRPC]
-    void RPC_SpawnRagdoll(Vector3 position, Quaternion rotation)
-    {
-        if (ragdollPrefab == null)
-        {
-            Debug.LogWarning("[PlayerHealth] No ragdollPrefab assigned.");
-            return;
-        }
-
-        Instantiate(ragdollPrefab, position, rotation);
-    }
-    [PunRPC]
     void RPC_OnDeath()
     {
-        if (deathProcessed) return;
-        deathProcessed = true;
-
         isAlive = false;
 
-        // Spawn ragdoll on ALL clients
-        photonView.RPC(
-            "RPC_SpawnRagdoll",
-            RpcTarget.All,
-            transform.position,
-            transform.rotation
-        );
+        SpawnRagdoll();
 
-        // ONLY local player handles UI/input/colliders
         if (photonView.IsMine)
         {
             if (deathPanel) deathPanel.SetActive(true);
@@ -169,9 +148,19 @@ public class PlayerHealth : MonoBehaviourPun
             foreach (Collider col in colliders)
                 col.enabled = false;
 
-            // Move body out of the way locally
             transform.position += Vector3.down * 20f;
         }
+    }
+
+    void SpawnRagdoll()
+    {
+        if (ragdollPrefab == null)
+        {
+            Debug.LogWarning("[PlayerHealth] No ragdollPrefab assigned.");
+            return;
+        }
+
+        Instantiate(ragdollPrefab, transform.position, transform.rotation);
     }
 
 

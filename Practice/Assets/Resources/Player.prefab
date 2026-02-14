@@ -7441,7 +7441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 4145451973829699599}
   playerInput: {fileID: 3060948542319566366}
-  startingWeapon: {fileID: 11400000, guid: a57e469cb6a740848b461c58860d5ca5, type: 2}
+  startingWeapon: {fileID: 11400000, guid: edf410d81ff26804781dc154f923bf3b, type: 2}
   playerRecoil: {fileID: 7386664137042488989}
   animationController: {fileID: 5458940704034874287}
   weaponDatabase:
@@ -7494,6 +7494,7 @@ MonoBehaviour:
   hitMarker: {fileID: 5775361672428542163}
   dropDistance: 45
   canControl: 1
+  canCycleManually: 0
 --- !u!114 &37581564927051185
 MonoBehaviour:
   m_ObjectHideFlags: 0

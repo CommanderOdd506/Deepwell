@@ -46,7 +46,7 @@ public class DamageSystem : MonoBehaviourPunCallbacks
         healthByActor[actorNumber] = health.maxHealth;
         weaponByActor[actorNumber] = startingWeapon;
         isAliveByActor[actorNumber] = true;
-
+        GameModeManager.Instance.RegisterPlayer(actorNumber);
         Debug.Log($"[DamageSystem] Registered Actor {actorNumber}");
     }
 
@@ -78,7 +78,7 @@ public class DamageSystem : MonoBehaviourPunCallbacks
             if (target.photonView.Owner.ActorNumber == shooterActor)
                 return;
 
-            ApplyDamage(target.photonView.Owner.ActorNumber, damage);
+            ApplyDamage(shooterActor, target.photonView.Owner.ActorNumber, damage);
             NotifyHitMarker(shooterActor);
         }
     }
@@ -97,7 +97,7 @@ public class DamageSystem : MonoBehaviourPunCallbacks
             targetController.photonView.RPC("RPC_ShowHitMarker", RpcTarget.All);
         }
     }
-    public void ApplyDamage(int targetActorNumber, int damage)
+    public void ApplyDamage(int shooterActor, int targetActorNumber, int damage)
     {
         if (!PhotonNetwork.IsMasterClient)
             return;
@@ -125,6 +125,7 @@ public class DamageSystem : MonoBehaviourPunCallbacks
             isAliveByActor[targetActorNumber] = false;
 
             targetHealth.photonView.RPC("RPC_OnDeath", RpcTarget.All);
+            GameModeManager.Instance.AddScore(shooterActor, targetActorNumber);
             NotifyDeath(targetActorNumber);
         }
     }
@@ -161,18 +162,6 @@ public class DamageSystem : MonoBehaviourPunCallbacks
         return spreadRot * forward;
     }
 
-    [ContextMenu("Test Damage First Player")]
-    void TestDamage()
-    {
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-
-        foreach (var kvp in playerHealthMap)
-        {
-            ApplyDamage(kvp.Key, 25);
-            break;
-        }
-    }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         if (!PhotonNetwork.IsMasterClient)
@@ -187,6 +176,7 @@ public class DamageSystem : MonoBehaviourPunCallbacks
         weaponByActor.Remove(actorNumber);
         isAliveByActor.Remove(actorNumber);
 
+        GameModeManager.Instance.CleanupActor(actorNumber);
         Debug.Log($"[DamageSystem] Cleaned up Actor {actorNumber}");
     }
 
@@ -231,7 +221,7 @@ public class DamageSystem : MonoBehaviourPunCallbacks
         if (!playerHealthMap.TryGetValue(deadActorNumber, out PlayerHealth health) || health == null)
         {
             CleanupActor(deadActorNumber);
-            yield return null;
+            yield break;
         }
         healthByActor[deadActorNumber] = health.maxHealth;
         isAliveByActor[deadActorNumber] = true;

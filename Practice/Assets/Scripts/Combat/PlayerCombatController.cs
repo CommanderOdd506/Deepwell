@@ -59,6 +59,7 @@ public class PlayerCombatController : MonoBehaviourPun
     bool isReloading;
     bool hasScope;
     bool isScoped;
+    [SerializeField] private bool canCycleManually;
 
     Coroutine reloadRoutine;
     Coroutine reloadMotionRoutine;
@@ -87,7 +88,7 @@ public class PlayerCombatController : MonoBehaviourPun
         if(!canControl)
             return;
         float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (scroll != 0f && !isReloading && !isScoped)
+        if (scroll != 0f && !isReloading && !isScoped && canCycleManually)
         {
             CycleWeapon(scroll > 0f ? 1 : -1);
         }
@@ -170,6 +171,24 @@ public class PlayerCombatController : MonoBehaviourPun
         EquipWeapon(weaponDatabase[currentWeaponIndex].weaponData);
     }
 
+    [PunRPC]
+    public void RPC_PromotePlayer(int newWeaponId)
+    {
+        if (!photonView.IsMine)
+            return;
+
+        foreach (WeaponReference weapon in weaponDatabase)
+        {
+            if (weapon.weaponData.weaponId == newWeaponId)
+            {
+                EquipWeapon(weapon.weaponData);
+                return;
+            }
+        }
+
+        Debug.LogWarning($"Weapon ID {newWeaponId} not found in database.");
+    }
+
     public void EquipWeapon(WeaponData newWeapon)
     {
         if (!photonView.IsMine || newWeapon == currentWeapon || newWeapon == null)
@@ -181,11 +200,7 @@ public class PlayerCombatController : MonoBehaviourPun
         maxMagAmmo = newWeapon.magSize;
         magAmmo = maxMagAmmo;
         hasScope = newWeapon.isScoped;
-
-        if (!hasScope)
-        {
-            DeactivateScope();
-        }
+        DeactivateScope();
 
         lastFireInput = false;
         ArmType newType = newWeapon.armType;
