@@ -57,6 +57,7 @@ MonoBehaviour:
   - PlaySFX3D
   - RPC_PlayWeaponShot3D
   - RPC_PromotePlayer
+  - SpawnPlayerRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

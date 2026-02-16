@@ -1,33 +1,42 @@
 using Photon.Pun;
 using UnityEngine;
-using System.Collections;
 
-public class SpawnPlayers : MonoBehaviour
+public class SpawnPlayers : MonoBehaviourPun
 {
     public GameObject playerPrefab;
     public Transform[] spawns;
 
-    void Start()
-    {
-        StartCoroutine(WaitForRoomAndSpawn());
-    }
-
     public Vector3 GetRandomSpawn()
     {
-        int spawnIndex = Random.Range(0, spawns.Length - 1);
+        int spawnIndex = Random.Range(0, spawns.Length);
         return spawns[spawnIndex].position;
     }
 
-    IEnumerator WaitForRoomAndSpawn()
+    [PunRPC]
+    void SpawnPlayerRPC()
     {
-        while (!PhotonNetwork.InRoom)
-        {
-            yield return null; // wait until actually inside room
-        }
-
         Debug.Log($"[SPAWN] Actor {PhotonNetwork.LocalPlayer.ActorNumber} spawning");
 
-        int spawnIndex = Random.Range(0, spawns.Length - 1);
-        PhotonNetwork.Instantiate(playerPrefab.name, spawns[spawnIndex].position, Quaternion.identity);
+        GameObject.FindObjectOfType<RotateObject>().gameObject.SetActive(false);
+
+        Vector3 spawnPos = GetRandomSpawn();
+        PhotonNetwork.Instantiate(playerPrefab.name, spawnPos, Quaternion.identity);
+    }
+
+    public void SpawnPlayerLate()
+    {
+        Debug.Log($"[SPAWN] Actor {PhotonNetwork.LocalPlayer.ActorNumber} spawning");
+
+        GameObject.FindObjectOfType<RotateObject>().gameObject.SetActive(false);
+
+        Vector3 spawnPos = GetRandomSpawn();
+        PhotonNetwork.Instantiate(playerPrefab.name, spawnPos, Quaternion.identity);
+    }
+
+    public void StartGame()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        photonView.RPC("SpawnPlayerRPC", RpcTarget.All);
     }
 }

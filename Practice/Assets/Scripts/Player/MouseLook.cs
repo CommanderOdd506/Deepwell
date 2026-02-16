@@ -17,8 +17,7 @@ public class MouseLook : MonoBehaviourPun
 
     [Header("Recoil")]
     [SerializeField] private PlayerRecoil playerRecoil;
-
-    void Start()
+    void Awake()
     {
         cam = GetComponentInChildren<Camera>();
 
@@ -45,6 +44,10 @@ public class MouseLook : MonoBehaviourPun
 
         if (playerRecoil == null)
             playerRecoil = GetComponentInChildren<PlayerRecoil>();
+    }
+    void Start()
+    {
+        
     }
 
     public void ToggleMovement(bool value)

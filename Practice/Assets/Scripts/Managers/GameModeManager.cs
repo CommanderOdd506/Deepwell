@@ -1,7 +1,8 @@
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using ExitGames.Client.Photon;
 
 public enum GameMode
 {
@@ -15,6 +16,7 @@ public class GameModeManager : MonoBehaviourPunCallbacks
     public static GameMode CurrentMode { get; private set; }
     private Dictionary<int, int> scoreByActor = new Dictionary<int, int>();
     [SerializeField] private WeaponData[] gunGameOrder;
+
 
     // Start is called before the first frame update
 
@@ -53,6 +55,27 @@ public class GameModeManager : MonoBehaviourPunCallbacks
                 break;
         }
 
+    }
+
+    public void StartGame()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("GameStarted", out object started))
+            {
+                if ((bool)started)
+                {
+                    // Game already running — allow late spawn
+                    FindObjectOfType<SpawnPlayers>().SpawnPlayerLate();
+                }
+            }
+            return;
+        }
+        Hashtable props = new Hashtable();
+        props["GameStarted"] = true;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+        SpawnPlayers spawnPlayers = FindObjectOfType<SpawnPlayers>();
+        spawnPlayers.photonView.RPC("SpawnPlayerRPC", RpcTarget.All);
     }
     void HandleFFA(int killerActor, int victimActor)
     {

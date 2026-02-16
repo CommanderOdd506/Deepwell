@@ -44,7 +44,8 @@ public class PlayerMovement : MonoBehaviourPun
     void Awake()
     {
         if (!controller) controller = GetComponent<CharacterController>();
-    }
+        _timeSinceJumpPressed = jumpBuffer + 0.01f;
+}
 
     void Start()
     {
@@ -60,7 +61,7 @@ public class PlayerMovement : MonoBehaviourPun
     {
         if (!photonView.IsMine) return;
         
-            Vector3 forward = head.forward;
+        Vector3 forward = head.forward;
         forward.y = 0f;
         forward.Normalize();
 
