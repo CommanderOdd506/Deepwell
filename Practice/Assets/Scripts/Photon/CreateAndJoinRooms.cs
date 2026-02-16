@@ -87,4 +87,9 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
             Debug.Log("[SUCCESS] Waiting for master client to load scene...");
         }
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
