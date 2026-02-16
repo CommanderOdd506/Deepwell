@@ -79,6 +79,7 @@ public class GameModeManager : MonoBehaviourPunCallbacks
     }
     void HandleFFA(int killerActor, int victimActor)
     {
+        if (killerActor <= -1) return;
         scoreByActor.TryAdd(killerActor, 0);
 
         scoreByActor[killerActor]++;
@@ -88,6 +89,7 @@ public class GameModeManager : MonoBehaviourPunCallbacks
 
     void HandleGunGame(int killerActor, int victimActor)
     {
+        if (killerActor <= -1) return;
         scoreByActor.TryAdd(killerActor, 0);
 
         scoreByActor[killerActor]++;
@@ -95,6 +97,19 @@ public class GameModeManager : MonoBehaviourPunCallbacks
         PromoteWeapon(killerActor);
 
         Debug.Log($"[GunGame] {killerActor} advanced to tier {scoreByActor[killerActor]}");
+    }
+
+    public bool InGame()
+    {
+        if (PhotonNetwork.CurrentRoom == null)
+            return false;
+
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("GameStarted", out object started))
+        {
+            return (bool)started;
+        }
+
+        return false;
     }
 
     public void PromoteWeapon(int actorNumber)

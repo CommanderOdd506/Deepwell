@@ -230,6 +230,15 @@ public class DamageSystem : MonoBehaviourPunCallbacks
 
         health.photonView.RPC("RPC_Respawn", RpcTarget.All, spawnPoint);
     }
+
+    public void ApplyEnvironmentDamage(int targetActorNumber, int damage)
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        ApplyDamage(-1, targetActorNumber, damage);
+    }
+
     [PunRPC]
     void RPC_RequestFire(
     Vector3 origin,
