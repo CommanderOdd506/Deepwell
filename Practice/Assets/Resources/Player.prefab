@@ -482,8 +482,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shader: {fileID: 4800000, guid: 739c6569a1eb0c448804a9e0e49f34b1, type: 3}
-  FilterQuality: 1
-  VideoMode: 4
+  FilterQuality: 0
+  VideoMode: 5
   DisplaySizeX: 1920
   DisplaySizeY: 1080
   StretchToDisplay: 1
@@ -493,7 +493,7 @@ MonoBehaviour:
   TVOverlay: {fileID: 2800000, guid: 983b4e2248d599443981d96b39576aeb, type: 3}
   EnablePixelMask: 1
   PixelMaskTexture: {fileID: 2800000, guid: 55b9f85457b9afc46834d927aa2e61cc, type: 3}
-  MaskRepeatX: 200
+  MaskRepeatX: 260
   MaskRepeatY: 90
   PixelMaskBrightness: 1.4
   IQOffset: {x: 0, y: 0}

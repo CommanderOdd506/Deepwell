@@ -15,6 +15,7 @@ public class DamageSystem : MonoBehaviourPunCallbacks
     private Dictionary<int, int> healthByActor = new Dictionary<int, int>();
     private Dictionary<int, WeaponData> weaponByActor = new Dictionary<int, WeaponData>();
     private Dictionary<int, bool> isAliveByActor = new Dictionary<int, bool>();
+    [SerializeField] private float startBuffer = 0.5f;
     [SerializeField] private WeaponData[] weaponDatabase;
     void Awake()
     {
@@ -61,14 +62,14 @@ public class DamageSystem : MonoBehaviourPunCallbacks
     {
         if (!PhotonNetwork.IsMasterClient)
             return;
-
+        Vector3 rayStart = origin + direction.normalized * startBuffer;
         DebugHitscanGizmo gizmo = GetComponent<DebugHitscanGizmo>();
         if (gizmo != null)
         {
-            gizmo.RecordRay(origin, direction, range);
+            gizmo.RecordRay(rayStart, direction, range);
         }
 
-        if (Physics.Raycast(origin, direction, out RaycastHit hit, range))
+        if (Physics.Raycast(rayStart, direction, out RaycastHit hit, range))
         {
             PlayerHealth target = hit.collider.GetComponentInParent<PlayerHealth>();
             if (target == null)

@@ -500,8 +500,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4285431276
-  m_fontColor: {r: 0.9245283, g: 0.49194908, b: 0.43173724, a: 1}
+    rgba: 4281679236
+  m_fontColor: {r: 0.5188679, g: 0.23851031, b: 0.20803666, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1807,8 +1807,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shader: {fileID: 4800000, guid: 739c6569a1eb0c448804a9e0e49f34b1, type: 3}
-  FilterQuality: 1
-  VideoMode: 4
+  FilterQuality: 0
+  VideoMode: 5
   DisplaySizeX: 1920
   DisplaySizeY: 1080
   StretchToDisplay: 1
@@ -1818,9 +1818,9 @@ MonoBehaviour:
   TVOverlay: {fileID: 2800000, guid: 983b4e2248d599443981d96b39576aeb, type: 3}
   EnablePixelMask: 1
   PixelMaskTexture: {fileID: 2800000, guid: 55b9f85457b9afc46834d927aa2e61cc, type: 3}
-  MaskRepeatX: 200
+  MaskRepeatX: 260
   MaskRepeatY: 90
-  PixelMaskBrightness: 1
+  PixelMaskBrightness: 1.4
   IQOffset: {x: 0, y: 0}
   IQScale: {x: 1, y: 1}
   RFNoise: 0.03
@@ -2582,7 +2582,7 @@ RectTransform:
   m_GameObject: {fileID: 1812683948}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 6.1924105, y: 6.1924105, z: 6.1924105}
+  m_LocalScale: {x: 4.878814, y: 4.878814, z: 4.878814}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1073733831}
@@ -2605,7 +2605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9254902, g: 0.4901961, b: 0.43137255, a: 0.12156863}
+  m_Color: {r: 0.9254902, g: 0.4901961, b: 0.43137255, a: 0.11372549}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
