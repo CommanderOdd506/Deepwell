@@ -59,6 +59,7 @@ public class PlayerCombatController : MonoBehaviourPun
     bool isReloading;
     bool hasScope;
     bool isScoped;
+    bool isDead;
     [SerializeField] private bool canCycleManually;
 
     Coroutine reloadRoutine;
@@ -262,7 +263,7 @@ public class PlayerCombatController : MonoBehaviourPun
     }
     void TryFire()
     {
-        if (!photonView.IsMine)
+        if (!photonView.IsMine || isDead)
             return;
 
         Debug.Log("Fire!");
@@ -331,6 +332,22 @@ public class PlayerCombatController : MonoBehaviourPun
             crosshair.SetActive(true);
             viewModelUI.SetActive(true);
         }
+    }
+
+    public void SetLife(bool isAlive)
+    {
+        if (!isAlive)
+        {
+            DeactivateScope();
+            isDead = true;
+        }
+        else
+        {
+            isDead = false;
+            magAmmo = maxMagAmmo;
+            UpdateUI();
+        }
+
     }
 
     private IEnumerator ReloadEvent()

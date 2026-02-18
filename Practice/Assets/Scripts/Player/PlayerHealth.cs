@@ -102,6 +102,7 @@ public class PlayerHealth : MonoBehaviourPun
     void RPC_Respawn(Vector3 spawnPoint)
     {
         transform.position = spawnPoint;
+        playerCombatController.SetLife(true);
         deathPanel.SetActive(false);
         playerInput.ToggleInput(true);
         playerMovement.ToggleMovement(true);
@@ -109,6 +110,7 @@ public class PlayerHealth : MonoBehaviourPun
         currentHealth = maxHealth;
         isAlive = true;
         deathProcessed = false;
+        
 
         Collider[] colliders = GetComponentsInChildren<Collider>();
         foreach (Collider col in colliders)
@@ -136,14 +138,15 @@ public class PlayerHealth : MonoBehaviourPun
         isAlive = false;
 
         SpawnRagdoll();
-
+        
         if (photonView.IsMine)
         {
+            playerCombatController.SetLife(false);
             if (deathPanel) deathPanel.SetActive(true);
             if (playerInput) playerInput.ToggleInput(false);
             if (playerMovement) playerMovement.ToggleMovement(false);
             if (mouseLook) mouseLook.ToggleMovement(false);
-
+            
             Collider[] colliders = GetComponentsInChildren<Collider>(true);
             foreach (Collider col in colliders)
                 col.enabled = false;

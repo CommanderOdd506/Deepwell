@@ -32,7 +32,7 @@ public class LobbyLeaderboard : MonoBehaviourPunCallbacks
             GameObject entry = Instantiate(playerEntryPrefab, contentParent);
 
             TMP_Text text = entry.GetComponent<TMP_Text>();
-            text.text = player.ActorNumber.ToString();
+            text.text = player.NickName;
 
             spawnedEntries.Add(entry);
         }

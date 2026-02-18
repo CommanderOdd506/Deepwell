@@ -64,6 +64,8 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         Debug.LogError($"[JOIN FAILED] Code: {returnCode} | Message: {message}");
+
+        PhotonNetwork.JoinLobby(); // Re-enter lobby after failure
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
