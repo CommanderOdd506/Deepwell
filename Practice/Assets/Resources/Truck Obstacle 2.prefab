@@ -422,6 +422,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367170348994608851}
+  - component: {fileID: 130587245806245526}
   m_Layer: 0
   m_Name: Axle5
   m_TagString: Untagged
@@ -446,6 +447,20 @@ Transform:
   - {fileID: 6240584552113017044}
   m_Father: {fileID: 5248783212578898787}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &130587245806245526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6983373806324769435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 683a12db6d83394409bcff84ff3bd925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 1000
+  axis: x
 --- !u!1 &7698788582165731334
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,6 +631,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4153472058092383004}
+  - component: {fileID: 2065965136724366271}
   m_Layer: 0
   m_Name: Axle4
   m_TagString: Untagged
@@ -640,6 +656,20 @@ Transform:
   - {fileID: 217447253750264624}
   m_Father: {fileID: 5248783212578898787}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2065965136724366271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7852787910371781863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 683a12db6d83394409bcff84ff3bd925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 1000
+  axis: x
 --- !u!1 &8676338050051472208
 GameObject:
   m_ObjectHideFlags: 0

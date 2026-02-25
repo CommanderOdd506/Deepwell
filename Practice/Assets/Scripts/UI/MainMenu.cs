@@ -19,6 +19,8 @@ public class MainMenu : MonoBehaviourPun
         {
             PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerNickname");
         }
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void SetNickname()

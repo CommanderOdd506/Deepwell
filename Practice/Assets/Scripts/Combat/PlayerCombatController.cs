@@ -338,7 +338,7 @@ public class PlayerCombatController : MonoBehaviourPun
     {
         if (!isAlive)
         {
-            DeactivateScope();
+            ForceScopeReset();
             isDead = true;
         }
         else
@@ -347,9 +347,17 @@ public class PlayerCombatController : MonoBehaviourPun
             magAmmo = maxMagAmmo;
             UpdateUI();
         }
-
     }
+    private void ForceScopeReset()
+    {
+        isScoped = false;
 
+        cam.fieldOfView = startingFOV;
+
+        scope.SetActive(false);
+        crosshair.SetActive(true);
+        viewModelUI.SetActive(true);
+    }
     private IEnumerator ReloadEvent()
     {
         if (currentWeapon == null)

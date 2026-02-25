@@ -35,6 +35,16 @@ public class GameModeManager : MonoBehaviourPunCallbacks
         CurrentMode = startingMode;
     }
 
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        // If you're NOT the new master, it means the old host left
+        // and Photon migrated master to someone else.
+
+        Debug.Log("Master client switched. Ending room.");
+
+        SceneTransitionManager.ReturnToLobby();
+    }
+
     // ==============================
     // PLAYER REGISTRATION
     // ==============================
@@ -195,6 +205,8 @@ public class GameModeManager : MonoBehaviourPunCallbacks
 
         return false;
     }
+
+
 
     // ==============================
     // GUNGAME PROMOTION
