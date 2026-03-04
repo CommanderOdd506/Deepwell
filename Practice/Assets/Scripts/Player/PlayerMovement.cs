@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviourPun
 
         if (isGrounded) _timeSinceLeftGround = 0f; else _timeSinceLeftGround += Time.deltaTime;
 
-        isSprinting = sprintHeld;
+        isSprinting = sprintHeld && move.y > 0.1f;
 
 
         float targetSpeed = isSprinting ? sprintSpeed : walkSpeed;

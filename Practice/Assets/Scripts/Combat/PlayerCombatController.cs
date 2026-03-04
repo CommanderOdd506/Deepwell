@@ -2,6 +2,7 @@ using Photon.Pun;
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using UnityEngine.Audio;
 
 public enum ArmType
 {
@@ -32,6 +33,11 @@ public class PlayerCombatController : MonoBehaviourPun
     int currentWeaponIndex = 0;
 
     public Transform muzzle;
+
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip hitmarkerClip;
+
     [Header("Arm Types")]
     public GameObject rifleArms;
     public GameObject pistolArms;
@@ -127,6 +133,7 @@ public class PlayerCombatController : MonoBehaviourPun
         {
             StopAllCoroutines();
             StartCoroutine(ShowHitMarkerForDuration(0.2f));
+            audioSource.PlayOneShot(hitmarkerClip);
         }
     }
 

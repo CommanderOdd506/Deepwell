@@ -45,7 +45,7 @@ public class HeadBobController : MonoBehaviour
         if (speed < _toggleSpeed) return;
         if (!_controller.isGrounded) return;
         if(!canMove) return;
-        if (playerInput.sprintHeld)
+        if (playerInput.sprintHeld && playerInput.move.y > 0.1)
         {
             _amplitude = _runAmplitude;
             _frequency = _runFrequency;

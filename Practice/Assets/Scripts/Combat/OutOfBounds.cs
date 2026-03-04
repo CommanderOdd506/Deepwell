@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
 
 public class OutOfBounds : MonoBehaviourPun
 {
@@ -9,6 +10,8 @@ public class OutOfBounds : MonoBehaviourPun
     public float allowedOutTime = 10f;
     private bool _timerRunning;
     private float _boundsTimer;
+    public GameObject outOfBoundsPanel;
+    public TextMeshProUGUI boundsCountdown;
 
     void Start()
     {
@@ -19,6 +22,7 @@ public class OutOfBounds : MonoBehaviourPun
         if (other.tag == "OutOfBounds" && !_timerRunning)
         {
             _timerRunning = true;
+            outOfBoundsPanel.SetActive(true);
             Debug.Log("[OutOfBounds} Timer Started ! ");
         }
     }
@@ -28,7 +32,8 @@ public class OutOfBounds : MonoBehaviourPun
         if (other.CompareTag("OutOfBounds"))
         {
             _timerRunning = false;
-            _boundsTimer = allowedOutTime; // reset timer
+            _boundsTimer = allowedOutTime;// reset timer
+            outOfBoundsPanel.SetActive(false);
             Debug.Log("[OutOfBounds} Timer Stopped ! ");
         }
     }
@@ -40,10 +45,13 @@ public class OutOfBounds : MonoBehaviourPun
 
         _boundsTimer -= Time.deltaTime;
 
+        int secondsLeft = Mathf.CeilToInt(_boundsTimer);
+        boundsCountdown.text = secondsLeft.ToString();
         if (_boundsTimer <= 0f)
         {
             _timerRunning = false;
             _boundsTimer = allowedOutTime;
+            outOfBoundsPanel.SetActive(false);
 
             photonView.RPC(
                 "RPC_RequestKill",

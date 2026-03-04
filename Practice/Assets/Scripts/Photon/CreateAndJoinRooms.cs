@@ -32,7 +32,7 @@ public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
         Debug.Log($"[CREATE] Attempting to create room: '{roomName}'");
 
         RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = 4;
+        roomOptions.MaxPlayers = 5;
         roomOptions.IsVisible = true;
         roomOptions.IsOpen = true;
 
