@@ -6,10 +6,10 @@ using TMPro;
 
 public class OutOfBounds : MonoBehaviourPun
 {
-
     public float allowedOutTime = 10f;
-    private bool _timerRunning;
     private float _boundsTimer;
+    private int _oobZoneCount = 0; // ? track how many OOB zones we're inside
+
     public GameObject outOfBoundsPanel;
     public TextMeshProUGUI boundsCountdown;
 
@@ -17,40 +17,47 @@ public class OutOfBounds : MonoBehaviourPun
     {
         _boundsTimer = allowedOutTime;
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "OutOfBounds" && !_timerRunning)
+        if (!other.CompareTag("OutOfBounds")) return;
+
+        _oobZoneCount++;
+
+        if (_oobZoneCount == 1) // just entered first zone
         {
-            _timerRunning = true;
             outOfBoundsPanel.SetActive(true);
-            Debug.Log("[OutOfBounds} Timer Started ! ");
+            Debug.Log("[OutOfBounds] Timer Started!");
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("OutOfBounds"))
+        if (!other.CompareTag("OutOfBounds")) return;
+
+        _oobZoneCount = Mathf.Max(0, _oobZoneCount - 1); // safety clamp
+
+        if (_oobZoneCount == 0) // fully back in bounds
         {
-            _timerRunning = false;
-            _boundsTimer = allowedOutTime;// reset timer
+            _boundsTimer = allowedOutTime;
             outOfBoundsPanel.SetActive(false);
-            Debug.Log("[OutOfBounds} Timer Stopped ! ");
+            Debug.Log("[OutOfBounds] Timer Stopped!");
         }
     }
-    // Update is called once per frame
+
     void Update()
     {
         if (!photonView.IsMine) return;
-        if (!_timerRunning) return;
+        if (_oobZoneCount == 0) return; // ? use count, not bool
 
         _boundsTimer -= Time.deltaTime;
-
         int secondsLeft = Mathf.CeilToInt(_boundsTimer);
         boundsCountdown.text = secondsLeft.ToString();
+
         if (_boundsTimer <= 0f)
         {
-            _timerRunning = false;
             _boundsTimer = allowedOutTime;
+            _oobZoneCount = 0;
             outOfBoundsPanel.SetActive(false);
 
             photonView.RPC(
@@ -64,10 +71,7 @@ public class OutOfBounds : MonoBehaviourPun
     [PunRPC]
     private void RPC_RequestKill(int actorNumber)
     {
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-
-        // Apply lethal damage
+        if (!PhotonNetwork.IsMasterClient) return;
         DamageSystem.Instance.ApplyEnvironmentDamage(actorNumber, 9999);
     }
 }

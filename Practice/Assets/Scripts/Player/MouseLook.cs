@@ -66,6 +66,13 @@ public class MouseLook : MonoBehaviourPun
         }
     }
 
+    public void SetSensitivity(float newSensetivity)
+    {
+        if (newSensetivity == sensitivity) return;
+
+        sensitivity = newSensetivity;
+    }
+
     void Update()
     {
         if (!photonView.IsMine) return;
