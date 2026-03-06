@@ -17,6 +17,9 @@ public class DamageSystem : MonoBehaviourPunCallbacks
     private Dictionary<int, bool> isAliveByActor = new Dictionary<int, bool>();
     [SerializeField] private float startBuffer = 0.5f;
     [SerializeField] private WeaponData[] weaponDatabase;
+
+    private bool _inRound;
+    
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -31,6 +34,11 @@ public class DamageSystem : MonoBehaviourPunCallbacks
     void Start()
     {
         spawnPlayers = GetComponentInParent<SpawnPlayers>();
+    }
+
+    public void SetRound(bool round)
+    {
+        _inRound = round;
     }
 
 
@@ -106,6 +114,8 @@ public class DamageSystem : MonoBehaviourPunCallbacks
         if (isAliveByActor.TryGetValue(targetActorNumber, out bool alive) && !alive)
             return;
 
+        if (!_inRound) return;
+
         if (!playerHealthMap.TryGetValue(targetActorNumber, out PlayerHealth targetHealth) || targetHealth == null)
         {
             CleanupActor(targetActorNumber);
@@ -170,7 +180,7 @@ public class DamageSystem : MonoBehaviourPunCallbacks
 
         CleanupActor(otherPlayer.ActorNumber);
     }
-    private void CleanupActor(int actorNumber)
+    public void CleanupActor(int actorNumber)
     {
         playerHealthMap.Remove(actorNumber);
         healthByActor.Remove(actorNumber);

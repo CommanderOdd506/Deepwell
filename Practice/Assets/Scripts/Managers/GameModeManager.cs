@@ -1,9 +1,11 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using ExitGames.Client.Photon;
 using System.Linq;
+
+using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 
 public enum GameMode
 {
@@ -59,7 +61,7 @@ public class GameModeManager : MonoBehaviourPunCallbacks
         {
             nameByActor[actorNumber] = player.NickName;
 
-            Hashtable props = new Hashtable();
+            PhotonHashtable props = new PhotonHashtable();
             props["Score"] = 0;
             player.SetCustomProperties(props);
         }
@@ -93,10 +95,52 @@ public class GameModeManager : MonoBehaviourPunCallbacks
 
     private void WinRound(int actorNumber)
     {
-        Hashtable props = new Hashtable();
-        props["GameStarted"] = false;
-        PhotonNetwork.CurrentRoom.SetCustomProperties(props);
-        
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        Debug.Log($"Player {actorNumber} wins the match!");
+
+
+        StartCoroutine(RestartMatchRoutine());
+    }
+
+    private IEnumerator RestartMatchRoutine()
+    {
+        // 1️⃣ End the match
+        PhotonHashtable endProps = new PhotonHashtable();
+        endProps["GameStarted"] = false;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(endProps);
+        DamageSystem.Instance.SetRound(false);
+
+        Debug.Log("Match ended. Restarting in 5 seconds...");
+
+        // 2️⃣ Wait (win screen time)
+        yield return new WaitForSeconds(5f);
+
+        // 3️⃣ Reset all scores
+        ResetAllScores();
+
+        Debug.Log("Scores reset.");
+
+        // 4️⃣ Start the match again
+        PhotonHashtable startProps = new PhotonHashtable();
+        startProps["GameStarted"] = true;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(startProps);
+        DamageSystem.Instance.SetRound(true);
+        // 5️⃣ Respawn everyone
+        SpawnPlayers spawnPlayers = FindObjectOfType<SpawnPlayers>();
+        foreach (var player in FindObjectsOfType<PlayerHealth>())
+        {
+            Vector3 spawn = spawnPlayers.GetRandomSpawn();
+
+            player.photonView.RPC(
+                "RPC_Respawn",
+                RpcTarget.All,
+                spawn
+            );
+        }
+
+        Debug.Log("New match started.");
     }
 
     void HandleFFA(int killerActor, int victimActor)
@@ -133,7 +177,7 @@ public class GameModeManager : MonoBehaviourPunCallbacks
         if (player == null)
             return;
 
-        Hashtable props = new Hashtable();
+        PhotonHashtable props = new PhotonHashtable();
         props["Score"] = scoreByActor[actorNumber];
 
         player.SetCustomProperties(props);
@@ -158,7 +202,7 @@ public class GameModeManager : MonoBehaviourPunCallbacks
             .ToArray();
     }
 
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, PhotonHashtable changedProps)
     {
         if (changedProps.ContainsKey("Score"))
         {
@@ -173,6 +217,7 @@ public class GameModeManager : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
+
         if (!PhotonNetwork.IsMasterClient)
         {
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("GameStarted", out object started))
@@ -185,10 +230,11 @@ public class GameModeManager : MonoBehaviourPunCallbacks
             return;
         }
 
-        Hashtable props = new Hashtable();
+        if (InGame()) return;
+        PhotonHashtable props = new PhotonHashtable();
         props["GameStarted"] = true;
         PhotonNetwork.CurrentRoom.SetCustomProperties(props);
-
+        DamageSystem.Instance.SetRound(true);
         SpawnPlayers spawnPlayers = FindObjectOfType<SpawnPlayers>();
         spawnPlayers.photonView.RPC("SpawnPlayerRPC", RpcTarget.All);
     }
@@ -204,6 +250,18 @@ public class GameModeManager : MonoBehaviourPunCallbacks
         }
 
         return false;
+    }
+
+    private void ResetAllScores()
+    {
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            scoreByActor[player.ActorNumber] = 0;
+
+            PhotonHashtable props = new PhotonHashtable();
+            props["Score"] = 0;
+            player.SetCustomProperties(props);
+        }
     }
 
 

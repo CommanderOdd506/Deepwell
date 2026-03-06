@@ -60,6 +60,8 @@ MonoBehaviour:
   - SpawnPlayerRPC
   - RPC_RequestEnvironmentDamage
   - RPC_RequestKill
+  - RPC_EndRound
+  - RPC_StartNewRound
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
