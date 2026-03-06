@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Spas
   m_EditorClassIdentifier: 
   weaponId: 0
-  shotClip: {fileID: 8300000, guid: aa0c0f74a6b25014bad2b51ab15ae226, type: 3}
+  shotClip: {fileID: 8300000, guid: 1e469e17d193e6a4983dd971c7dc30b0, type: 3}
   reloadClip: {fileID: 0}
   type: 5
   armType: 0

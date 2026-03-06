@@ -3,10 +3,23 @@ using UnityEngine;
 
 public class SpawnPlayers : MonoBehaviourPun
 {
+    public static SpawnPlayers Instance { get; private set; }
     public GameObject playerPrefab;
     public Transform[] spawns;
 
     bool hasSpawned = false;
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
+
 
     public Vector3 GetRandomSpawn()
     {
@@ -22,7 +35,7 @@ public class SpawnPlayers : MonoBehaviourPun
 
         Debug.Log($"[SPAWN] Actor {PhotonNetwork.LocalPlayer.ActorNumber} spawning");
 
-        RotateObject rotator = FindObjectOfType<RotateObject>();
+        RotateObject rotator = GameObject.Find("Camera Spinner").GetComponent<RotateObject>();
         if (rotator != null)
             rotator.gameObject.SetActive(false);
 

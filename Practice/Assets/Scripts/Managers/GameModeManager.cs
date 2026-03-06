@@ -119,23 +119,23 @@ public class GameModeManager : MonoBehaviourPunCallbacks
 
         // 3️⃣ Reset all scores
         ResetAllScores();
-
+        ResetWeapons();
         Debug.Log("Scores reset.");
 
         // 4️⃣ Start the match again
-        PhotonHashtable startProps = new PhotonHashtable();
-        startProps["GameStarted"] = true;
-        PhotonNetwork.CurrentRoom.SetCustomProperties(startProps);
-        DamageSystem.Instance.SetRound(true);
+        DamageSystem.Instance.SetRound(false);
+
+        // start next round countdown
+        StartRoundCountdown(6);
         // 5️⃣ Respawn everyone
-        SpawnPlayers spawnPlayers = FindObjectOfType<SpawnPlayers>();
+        SpawnPlayers spawnPlayers = SpawnPlayers.Instance;
         foreach (var player in FindObjectsOfType<PlayerHealth>())
         {
             Vector3 spawn = spawnPlayers.GetRandomSpawn();
 
             player.photonView.RPC(
                 "RPC_Respawn",
-                RpcTarget.All,
+                player.photonView.Owner,
                 spawn
             );
         }
@@ -171,6 +171,7 @@ public class GameModeManager : MonoBehaviourPunCallbacks
         Debug.Log($"[GunGame] {killerActor} advanced to tier {scoreByActor[killerActor]}");
     }
 
+    
     private void SyncScoreToProperties(int actorNumber)
     {
         Player player = PhotonNetwork.CurrentRoom.GetPlayer(actorNumber);
@@ -215,9 +216,8 @@ public class GameModeManager : MonoBehaviourPunCallbacks
     // GAME STATE
     // ==============================
 
-    public void StartGame()
+    public void Spawn()
     {
-
         if (!PhotonNetwork.IsMasterClient)
         {
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("GameStarted", out object started))
@@ -230,13 +230,40 @@ public class GameModeManager : MonoBehaviourPunCallbacks
             return;
         }
 
+        SpawnPlayers spawnPlayers = FindObjectOfType<SpawnPlayers>();
+        spawnPlayers.photonView.RPC("SpawnPlayerRPC", RpcTarget.All);
+
+        StartRoundCountdown(6);
+    }
+    IEnumerator StartMatchRoutine(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        StartGame();
+    }
+
+    void StartRoundCountdown(double duration)
+    {
+        PhotonHashtable props = new PhotonHashtable();
+        props["MatchStartTime"] = PhotonNetwork.Time + duration;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+
+        StartCoroutine(StartMatchRoutine((float)duration));
+    }
+
+    public void StartGame()
+    {
+
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+
         if (InGame()) return;
         PhotonHashtable props = new PhotonHashtable();
         props["GameStarted"] = true;
         PhotonNetwork.CurrentRoom.SetCustomProperties(props);
         DamageSystem.Instance.SetRound(true);
-        SpawnPlayers spawnPlayers = FindObjectOfType<SpawnPlayers>();
-        spawnPlayers.photonView.RPC("SpawnPlayerRPC", RpcTarget.All);
     }
 
     public bool InGame()
@@ -264,7 +291,16 @@ public class GameModeManager : MonoBehaviourPunCallbacks
         }
     }
 
-
+    void ResetWeapons()
+    {
+        foreach (PlayerCombatController player in FindObjectsOfType<PlayerCombatController>())
+        {
+            player.photonView.RPC(
+                    "RPC_ResetWeapon",
+                    player.photonView.Owner
+                );
+        }
+    }
 
     // ==============================
     // GUNGAME PROMOTION

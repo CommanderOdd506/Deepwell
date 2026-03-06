@@ -60,7 +60,10 @@ public class PlayerMovement : MonoBehaviourPun
     void Update()
     {
         if (!photonView.IsMine) return;
-        
+
+        if (!GameModeManager.Instance.InGame())
+            return;
+
         Vector3 forward = head.forward;
         forward.y = 0f;
         forward.Normalize();

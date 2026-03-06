@@ -74,7 +74,7 @@ public class PlayerCombatController : MonoBehaviourPun
 
     void Start()
     {
-        
+
         if (!photonView.IsMine)
             return;
         startingFOV = cam.fieldOfView;
@@ -92,8 +92,12 @@ public class PlayerCombatController : MonoBehaviourPun
     {
         if (!photonView.IsMine)
             return;
-        if(!canControl)
+        if (!canControl)
             return;
+
+        if (!GameModeManager.Instance.InGame())
+            return;
+
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0f && !isReloading && !isScoped && canCycleManually)
         {
@@ -109,7 +113,7 @@ public class PlayerCombatController : MonoBehaviourPun
         {
             ActivateScope();
         }
-        else if (!aimInput && isScoped) 
+        else if (!aimInput && isScoped)
         {
             DeactivateScope();
         }
@@ -179,6 +183,14 @@ public class PlayerCombatController : MonoBehaviourPun
         EquipWeapon(weaponDatabase[currentWeaponIndex].weaponData);
     }
 
+    [PunRPC]
+    public void RPC_ResetWeapon()
+    {
+        if (!photonView.IsMine)
+            return;
+
+        EquipWeapon(weaponDatabase[0].weaponData);
+    }
     [PunRPC]
     public void RPC_PromotePlayer(int newWeaponId)
     {

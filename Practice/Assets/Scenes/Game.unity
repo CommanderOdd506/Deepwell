@@ -9936,7 +9936,7 @@ GameObject:
   - component: {fileID: 1013496382}
   - component: {fileID: 1013496381}
   m_Layer: 0
-  m_Name: Resume
+  m_Name: Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10008,7 +10008,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1303934773}
         m_TargetAssemblyTypeName: GameModeManager, Assembly-CSharp
-        m_MethodName: StartGame
+        m_MethodName: Spawn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16560,17 +16560,13 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5009496423168131231, guid: de5af7ff1aeef69449f9a64e2bb6b9b7, type: 3}
-      propertyPath: m_Value
-      value: 0.682
-      objectReference: {fileID: 0}
-    - target: {fileID: 5009496423168131231, guid: de5af7ff1aeef69449f9a64e2bb6b9b7, type: 3}
-      propertyPath: m_MaxValue
-      value: 1.4
-      objectReference: {fileID: 0}
     - target: {fileID: 5799374872171032429, guid: de5af7ff1aeef69449f9a64e2bb6b9b7, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5799374872171032429, guid: de5af7ff1aeef69449f9a64e2bb6b9b7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
