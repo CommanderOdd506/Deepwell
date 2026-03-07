@@ -17,6 +17,7 @@ public class PlayerHealth : MonoBehaviourPun
     private bool isAlive;
     bool deathProcessed;
     int actorNumber;
+    public SkinnedMeshRenderer skin;
     
     public float respawnTimer = 3;
 
@@ -101,6 +102,10 @@ public class PlayerHealth : MonoBehaviourPun
     [PunRPC]
     void RPC_Respawn(Vector3 spawnPoint)
     {
+        if (!photonView.IsMine)
+        {
+            skin.enabled = true;
+        }
         transform.position = spawnPoint;
         playerCombatController.SetLife(true);
         deathPanel.SetActive(false);
@@ -110,7 +115,7 @@ public class PlayerHealth : MonoBehaviourPun
         currentHealth = maxHealth;
         isAlive = true;
         deathProcessed = false;
-        
+
 
         Collider[] colliders = GetComponentsInChildren<Collider>();
         foreach (Collider col in colliders)
@@ -152,6 +157,10 @@ public class PlayerHealth : MonoBehaviourPun
                 col.enabled = false;
 
             transform.position += Vector3.down * 20f;
+        }
+        else
+        {
+            skin.enabled = false;
         }
     }
 

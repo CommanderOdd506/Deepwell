@@ -8819,7 +8819,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2249044831655728870
 Transform:
   m_ObjectHideFlags: 0
@@ -9007,6 +9007,7 @@ MonoBehaviour:
   aimPressed: 0
   reloadPressed: 0
   pausePressed: 0
+  leaderboardPressed: 0
 --- !u!114 &4136757423099641317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9213,6 +9214,7 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 100
   healthText: {fileID: 2134189657557131122}
+  skin: {fileID: 865447170216601839}
   respawnTimer: 3
   ragdollPrefab: {fileID: 530953766757157123, guid: bdef57ad9fc2f0c46878ba2acc32ba50, type: 3}
   deathPanel: {fileID: 4927445545882315702}
