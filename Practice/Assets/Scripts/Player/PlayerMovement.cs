@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviourPun
     private float _currentSpeed;
     private float _timeSinceLeftGround;
     private float _timeSinceJumpPressed;
+    [SerializeField] private bool _debug;
 
     void Awake()
     {
@@ -61,7 +62,7 @@ public class PlayerMovement : MonoBehaviourPun
     {
         if (!photonView.IsMine) return;
 
-        if (!GameModeManager.Instance.InGame())
+        if (!GameModeManager.Instance.InGame() && !_debug)
             return;
 
         Vector3 forward = head.forward;

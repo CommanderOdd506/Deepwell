@@ -27,7 +27,7 @@ MonoBehaviour:
     value: 1080
   ColorDepth:
     overrideState: 1
-    value: 0.392
+    value: 0.594
   DitherPattern:
     overrideState: 1
     value: {fileID: 2800000, guid: 33e4517dca3a2274ba1532dd85e3c541, type: 3}
@@ -109,7 +109,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.76
+    value: 0.429
   size:
     overrideState: 1
     value: 1.39
@@ -228,7 +228,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.07
+    value: 0.42
   color:
     overrideState: 1
     value: {r: 0, g: 0, b: 0, a: 1}
@@ -255,7 +255,7 @@ MonoBehaviour:
     value: 0
   radius:
     overrideState: 1
-    value: 0.25
+    value: 8.24
   quality:
     overrideState: 1
     value: 2
@@ -312,7 +312,7 @@ MonoBehaviour:
     value: 1
   temperature:
     overrideState: 1
-    value: -2
+    value: 1
   tint:
     overrideState: 1
     value: 0
@@ -333,7 +333,7 @@ MonoBehaviour:
     value: 0.1
   contrast:
     overrideState: 1
-    value: -38
+    value: -32
   mixerRedOutRedIn:
     overrideState: 1
     value: 100

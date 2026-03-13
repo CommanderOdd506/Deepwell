@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3388e3c444210514ca990897d0f74948, type: 3}
   m_Name: Spas
   m_EditorClassIdentifier: 
-  weaponId: 0
+  weaponId: 2
   shotClip: {fileID: 8300000, guid: 1e469e17d193e6a4983dd971c7dc30b0, type: 3}
   reloadClip: {fileID: 0}
   type: 5

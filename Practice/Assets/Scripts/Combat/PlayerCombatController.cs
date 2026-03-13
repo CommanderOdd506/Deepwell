@@ -67,6 +67,7 @@ public class PlayerCombatController : MonoBehaviourPun
     bool isScoped;
     bool isDead;
     [SerializeField] private bool canCycleManually;
+    [SerializeField] private bool _debug;
 
     Coroutine reloadRoutine;
     Coroutine reloadMotionRoutine;
@@ -95,7 +96,7 @@ public class PlayerCombatController : MonoBehaviourPun
         if (!canControl)
             return;
 
-        if (!GameModeManager.Instance.InGame())
+        if (!GameModeManager.Instance.InGame() && !_debug)
             return;
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");
