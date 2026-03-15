@@ -13,16 +13,23 @@ public class InGameLeaderboard : MonoBehaviourPunCallbacks
 
     private List<GameObject> spawnedEntries = new List<GameObject>();
 
+    private PlayerInput input;
+
+    void Start()
+    {
+        input = GetComponentInParent<PlayerInput>();
+    }
+
     void Update()
     {
         // Hold TAB to show leaderboard
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (input.leaderboardPressed)
         {
             leaderboardPanel.SetActive(true);
             RefreshLeaderboard();
         }
 
-        if (Input.GetKeyUp(KeyCode.Tab))
+        if (input.leaderboardUp)
         {
             leaderboardPanel.SetActive(false);
         }

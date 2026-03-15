@@ -21,6 +21,7 @@ public class PlayerInput : MonoBehaviourPun
     [Header("Util")]
     public bool pausePressed;
     public bool leaderboardPressed;
+    public bool leaderboardUp;
 
     private bool canInput = true;
 
@@ -52,6 +53,7 @@ public class PlayerInput : MonoBehaviourPun
         jumpPressed = Input.GetKeyDown(KeyCode.Space);
         firePressed = Input.GetMouseButton(0);
         aimPressed = Input.GetMouseButton(1);
-        leaderboardPressed = Input.GetKey(KeyCode.Tab);
+        leaderboardPressed = Input.GetKeyDown(KeyCode.Tab);
+        leaderboardUp = Input.GetKeyUp(KeyCode.Tab);
     }
 }
