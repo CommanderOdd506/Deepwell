@@ -7,11 +7,14 @@ public class MouseLook : MonoBehaviourPun
     public Transform head;
 
     public float sensitivity = 120f;
+    public float scopeSensMultiplier = 0.5f;
     public float pitchMin = -80f;
     public float pitchMax = 80f;
 
     private float _pitch;
     private Camera cam;
+
+    private bool _scoped = false;
 
     public bool canMove = true;
 
@@ -45,8 +48,12 @@ public class MouseLook : MonoBehaviourPun
         if (playerRecoil == null)
             playerRecoil = GetComponentInChildren<PlayerRecoil>(true);
     }
-    void Start()
+    public void SetScoped(bool value)
     {
+        if (_scoped != value)
+        {
+            _scoped = value;
+        }
         
     }
 
@@ -78,8 +85,9 @@ public class MouseLook : MonoBehaviourPun
         if (!photonView.IsMine) return;
         if (!canMove) return;
 
-        float mouseX = Input.GetAxisRaw("Mouse X") * sensitivity;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * sensitivity;
+        float actualSensetivity = _scoped ? sensitivity * scopeSensMultiplier : sensitivity;
+        float mouseX = Input.GetAxisRaw("Mouse X") * actualSensetivity;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * actualSensetivity;
 
         // Get recoil offset
         Vector2 recoilOffset = playerRecoil != null ? playerRecoil.RecoilRotation : Vector2.zero;

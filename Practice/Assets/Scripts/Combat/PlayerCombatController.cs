@@ -55,6 +55,7 @@ public class PlayerCombatController : MonoBehaviourPun
 
     public float dropDistance = 80f;
 
+    private MouseLook mouseLook;
 
     public bool canControl = true;
 
@@ -82,6 +83,7 @@ public class PlayerCombatController : MonoBehaviourPun
         EquipWeapon(startingWeapon);
 
         viewModelStartPos = viewModelUI.transform.localPosition;
+        mouseLook = GetComponent<MouseLook>();
     }
 
     public void ToggleControl(bool value)
@@ -332,6 +334,7 @@ public class PlayerCombatController : MonoBehaviourPun
         {
             isScoped = true;
             cam.fieldOfView = zoomFOV;
+            mouseLook.SetScoped(true);
             scope.SetActive(true);
             crosshair.SetActive(false);
             viewModelUI.SetActive(false);
@@ -348,6 +351,7 @@ public class PlayerCombatController : MonoBehaviourPun
         {
             isScoped = false;
             cam.fieldOfView = startingFOV;
+            mouseLook.SetScoped(false);
             scope.SetActive(false);
             crosshair.SetActive(true);
             viewModelUI.SetActive(true);
@@ -373,7 +377,7 @@ public class PlayerCombatController : MonoBehaviourPun
         isScoped = false;
 
         cam.fieldOfView = startingFOV;
-
+        mouseLook.SetScoped(false);
         scope.SetActive(false);
         crosshair.SetActive(true);
         viewModelUI.SetActive(true);
