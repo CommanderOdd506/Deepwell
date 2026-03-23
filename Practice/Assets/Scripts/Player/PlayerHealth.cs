@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
@@ -10,6 +11,7 @@ public class PlayerHealth : MonoBehaviourPun
     public int currentHealth;
     public int maxHealth;
     public TextMeshProUGUI healthText;
+    public RawImage bloodPanel;
     private PlayerCombatController playerCombatController;
     private MouseLook mouseLook;
     private PlayerMovement playerMovement;
@@ -20,6 +22,13 @@ public class PlayerHealth : MonoBehaviourPun
     public SkinnedMeshRenderer skin;
     
     public float respawnTimer = 3;
+    public float bloodStartFadeDelay = 2f;
+    public float bloodFadeSpeed = 10;
+
+    private float _bloodTimer;
+    private float currentAlpha = 0f;
+    private bool isFading = false;
+
 
     [Header("Player Reference")]
     public GameObject ragdollPrefab;
@@ -35,7 +44,7 @@ public class PlayerHealth : MonoBehaviourPun
         playerInput = GetComponent<PlayerInput>();
         mouseLook = GetComponent<MouseLook>();
         Initialize();
-
+        bloodPanel.color = new Vector4(1,0,0,0);
         int weaponId = playerCombatController.GetCurrentWeapon()?.weaponId ?? -1;
 
         photonView.RPC(
@@ -85,6 +94,34 @@ public class PlayerHealth : MonoBehaviourPun
         UpdateUI();
     }
 
+    void Update()
+    {
+        if (!photonView.IsMine || bloodPanel == null)
+            return;
+
+        if (!isFading)
+            return;
+
+        _bloodTimer += Time.deltaTime;
+
+        if (_bloodTimer > bloodStartFadeDelay)
+        {
+            currentAlpha = Mathf.Lerp(currentAlpha, 0f, bloodFadeSpeed * Time.deltaTime);
+
+            Color c = bloodPanel.color;
+            c.a = currentAlpha;
+            bloodPanel.color = c;
+
+            if (currentAlpha <= 0.01f)
+            {
+                currentAlpha = 0f;
+                isFading = false;
+                c.a = currentAlpha;
+                bloodPanel.color = c;
+            }
+        }
+    }
+
     [PunRPC]
     void RPC_SetHealth(int newHealth, PhotonMessageInfo info)
     {
@@ -94,6 +131,17 @@ public class PlayerHealth : MonoBehaviourPun
             $"IsMine={photonView.IsMine} " +
             $"Sender={info.Sender.ActorNumber}"
         );
+
+        if (newHealth < currentHealth)
+        {
+            _bloodTimer = 0;
+            currentAlpha = 1f;
+            isFading = true;
+
+            Color c = bloodPanel.color;
+            c.a = 1f;
+            bloodPanel.color = c;
+        }
 
         currentHealth = newHealth;
         UpdateUI();

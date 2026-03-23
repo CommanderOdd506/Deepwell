@@ -52,15 +52,15 @@ public class CarSpawner : MonoBehaviourPunCallbacks
             spawnPoint.rotation
         );
 
-        CarController controller = car.GetComponent<CarController>();
-        if (controller != null)
-        {
-            photonView.RPC("RPC_SetCarDirection", RpcTarget.AllBuffered, car.GetComponent<PhotonView>().ViewID, carDirection);
-        }
+        //CarController controller = car.GetComponent<CarController>();
+        //if (controller != null)
+        //{
+        //    photonView.RPC("RPC_SetCarDirection", RpcTarget.AllBuffered, car.GetComponent<PhotonView>().ViewID, carDirection);
+        //}
 
         Debug.Log($"[CarSpawner] Spawned car at {spawnPoint.name}");
     }
-
+    /*
     [PunRPC]
     void RPC_SetCarDirection(int carViewID, Vector3 direction)
     {
@@ -74,13 +74,5 @@ public class CarSpawner : MonoBehaviourPunCallbacks
             }
         }
     }
-
-    public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            StopAllCoroutines();
-            StartCoroutine(SpawnCarsRoutine());
-        }
-    }
+    */
 }
