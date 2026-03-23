@@ -19,7 +19,7 @@ public class MouseLook : MonoBehaviourPun
     [SerializeField] private PlayerRecoil playerRecoil;
     void Awake()
     {
-        cam = GetComponentInChildren<Camera>();
+        cam = GetComponentInChildren<Camera>(true);
 
         if (cam)
         {
@@ -34,7 +34,7 @@ public class MouseLook : MonoBehaviourPun
         if (head == null && cam) head = cam.transform;
         if (!photonView.IsMine)
         {
-            Destroy(GetComponentInChildren<AudioListener>());
+            Destroy(GetComponentInChildren<AudioListener>(true));
         }
         if (photonView.IsMine)
         {
@@ -43,7 +43,7 @@ public class MouseLook : MonoBehaviourPun
         }
 
         if (playerRecoil == null)
-            playerRecoil = GetComponentInChildren<PlayerRecoil>();
+            playerRecoil = GetComponentInChildren<PlayerRecoil>(true);
     }
     void Start()
     {

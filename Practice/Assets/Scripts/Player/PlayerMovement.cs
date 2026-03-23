@@ -77,6 +77,7 @@ public class PlayerMovement : MonoBehaviourPun
         bool sprintHeld = input.sprintHeld;
         bool jumpPressed = input.jumpPressed;
 
+        //handle pause gravity 
         if (!canMove)
         {
             if (isGrounded && _velocity.y < 0f) _velocity.y = groundStickForce;
